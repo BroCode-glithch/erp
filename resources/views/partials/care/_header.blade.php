@@ -5,7 +5,10 @@
         <div class="flex items-center">
             <!-- Example user profile section -->
             <span class="mr-4">Welcome, {{ Auth::user()->name }}</span>
-            <a href="{{ route('logout') }}" class="text-sm">Logout</a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
         </div>
     </div>
 </header>
