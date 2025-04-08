@@ -24,15 +24,15 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 });
 
 Route::middleware(['auth', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
-    Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('program-manager.dashboard');
+    Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('dashboard');
 });
 
 Route::middleware(['auth', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
-    Route::get('/dashboard', [CareSupportController::class, 'index'])->name('support.dashboard');
+    Route::get('/dashboard', [CareSupportController::class, 'index'])->name('dashboard');
 });
 
 
