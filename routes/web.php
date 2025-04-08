@@ -22,22 +22,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Admin Routes
+
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    // Add other routes for the Admin here
 });
 
-// Program Manager Routes
 Route::middleware(['auth', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
     Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('dashboard');
-    // Add other routes for Program Manager here
 });
 
-// Care Support Routes
 Route::middleware(['auth', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
     Route::get('/dashboard', [CareSupportController::class, 'index'])->name('dashboard');
-    // Add other routes for Care Support here
 });
+
 
 require __DIR__.'/auth.php';
