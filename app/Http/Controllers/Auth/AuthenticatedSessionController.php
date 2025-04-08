@@ -32,11 +32,11 @@ class AuthenticatedSessionController extends Controller
 
         
         if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard'); // Your route for admin dashboard
+            return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('program-manager')) {
-            return redirect()->route('pm.dashboard'); // Corrected route name for program manager dashboard
+            return redirect()->route('pm.dashboard');
         } elseif ($user->hasRole('support')) {
-            return redirect()->route('care.dashboard'); // Assuming this is your route for care support dashboard
+            return redirect()->route('care.dashboard');
         } else {
             return redirect()->route('user.dashboard');
         }
