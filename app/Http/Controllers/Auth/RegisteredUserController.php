@@ -62,12 +62,19 @@ class RegisteredUserController extends Controller
 
         // Redirect based on the role
         if ($user->hasRole('admin')) {
+            notify()->info('Account registered successfully!');
+            notify()->success('Welcome ' . $user->name);
             return redirect()->route('admin.dashboard'); // Redirects user to the admin dashboard based on role
         } elseif ($user->hasRole('program-manager')) {
+            notify()->info('Account registered successfully!');
+            notify()->success('Welcome ' . $user->name);
             return redirect()->route('program-manager.dashboard'); // Redirects user to program manager dashboard based on role
         } elseif ($user->hasRole('support')) {
+            notify()->info('Account registered successfully!');
+            notify()->success('Welcome ' . $user->name);
             return redirect()->route('support.dashboard'); // Redirects user to care support dsahboard based on role
         } else {
+            notify()->error('Oops! User has no role.', 'error');
             return redirect()->route('dashboard'); // default laravel dashboard
         }
     }

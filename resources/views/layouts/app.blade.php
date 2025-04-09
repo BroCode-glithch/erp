@@ -11,6 +11,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <!-- NotifyCSS -->
+        @notifyC
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -29,19 +32,22 @@
             @endisset
 
             <!-- Show success message only if there is one -->
-            @if (session('success'))
+            {{--  @if (session('success'))
                 <x-alert type="success" :message="session('success')" />
-            @endif
+            @endif  --}}
 
             <!-- Show error message only if there is one -->
-            @if (session('error'))
+            {{--  @if (session('error'))
                 <x-alert type="error" :message="session('error')" />
-            @endif
+            @endif  --}}
 
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
         </div>
+
+        @notifyJs
+        <x:notify-messages />
     </body>
 </html>

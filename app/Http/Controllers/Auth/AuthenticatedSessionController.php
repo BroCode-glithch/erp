@@ -32,15 +32,16 @@ class AuthenticatedSessionController extends Controller
 
 
         if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard')
-                    ->with('success', 'Welcome back, ' . $user->name . '!');
+            notify()->success('Welcome back, ' . $user->name . '!', 'Success');
+            return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('program-manager')) {
-            return redirect()->route('pm.dashboard')
-                    ->with('success', 'Welcome back, ' . $user->name . '!');
+            notify()->success('Welcome back, ' . $user->name . '!', 'Success');
+            return redirect()->route('pm.dashboard');
         } elseif ($user->hasRole('support')) {
-            return redirect()->route('care.dashboard')
-                    ->with('success', 'Welcome back, ' . $user->nane . '!');
+            notify()->success('Welcome back, ' . $user->name . '!', 'Success');
+            return redirect()->route('care.dashboard');
         } else {
+            notify()->error('Oops! User has no role.', 'error');
             return redirect()->route('user.dashboard');
         }
 
@@ -57,6 +58,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
+        notify()->success('Logout successful.', 'Success');
         return redirect('/');
     }
 }

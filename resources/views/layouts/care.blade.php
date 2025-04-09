@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Care Support Dashboard</title>
     <!-- Add your CSS or JS links here -->
+
+    @notifyCss
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -38,5 +41,7 @@
     <!-- Include the footer -->
     @include('partials.care._footer')
 
+    @notifyJs
+    <x:notify-messages />
 </body>
 </html>

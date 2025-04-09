@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Program Manager Dashboard</title>
     <!--  CSS or JS  -->
+
+    <!-- NotifyCss -->
+    @notifyCss
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -39,5 +43,7 @@
     <!-- Include the footer -->
     @include('partials.pm._footer')
 
+    @notifyJs
+    <x:notify-messages />
 </body>
 </html>

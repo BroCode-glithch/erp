@@ -6,6 +6,10 @@
     <title>Admin Dashboard</title>
     <!-- Add your CSS or JS links here -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- NotifyCss -->
+    @notifyCss
+    
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-100">
@@ -15,14 +19,14 @@
     <main>
         <div class="flex mt-16">
             <!-- Show success message only if there is one -->
-            @if (session('success'))
+            {{--  @if (session('success'))
                 <x-alert type="success" :message="session('success')" />
-            @endif
+            @endif  --}}
 
             <!-- Show error message only if there is one -->
-            @if (session('error'))
+            {{--  @if (session('error'))
                 <x-alert type="error" :message="session('error')" />
-            @endif
+            @endif  --}}
 
             <!-- Sidebar -->
                 @include('partials.admin._sidebar')
@@ -36,5 +40,8 @@
     <!-- Include the footer -->
     @include('partials.admin._footer')
 
+    
+    @notifyJs
+    <x:notify-messages />
 </body>
 </html>
