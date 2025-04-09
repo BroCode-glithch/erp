@@ -1,7 +1,7 @@
 <!-- resources/views/partials/pm/_header.blade.php -->
 <header class="p-4 text-white bg-gray-800">
     <div class="flex items-center justify-between">
-        <h1 class="text-xl font-semibold">PM Dashboard</h1>
+        <h1 class="text-xl font-semibold">Program Manager Dashboard</h1>
         <div class="flex items-center">
             <!-- Example user profile section -->
             <span class="mr-4">Welcome, {{ Auth::user()->name }}</span>

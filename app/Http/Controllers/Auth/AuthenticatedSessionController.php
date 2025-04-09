@@ -30,17 +30,20 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
-        
+
         if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')
+                    ->with('success', 'Welcome back, ' . $user->name . '!');
         } elseif ($user->hasRole('program-manager')) {
-            return redirect()->route('pm.dashboard');
+            return redirect()->route('pm.dashboard')
+                    ->with('success', 'Welcome back, ' . $user->name . '!');
         } elseif ($user->hasRole('support')) {
-            return redirect()->route('care.dashboard');
+            return redirect()->route('care.dashboard')
+                    ->with('success', 'Welcome back, ' . $user->nane . '!');
         } else {
             return redirect()->route('user.dashboard');
         }
-        
+
     }
 
     /**

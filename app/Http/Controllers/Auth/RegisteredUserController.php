@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:admin,program-manager,support'], // Allow only specific roles
+            'role' => ['required', 'string', 'in:admin,program-manager,care-support'], // Allow only specific roles
         ]);
 
         // Create user
@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
         if (Role::where('name', $role)->exists()) {
             $user->assignRole($role);
         } else {
-            $user->assignRole('user'); // Default role if invalid role provided
+            return redirect()->route('register')->with('error', 'Invalid Role'); // log or notify that an invalid role was sent
         }
 
         event(new Registered($user));

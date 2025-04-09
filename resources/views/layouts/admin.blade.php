@@ -6,6 +6,7 @@
     <title>Admin Dashboard</title>
     <!-- Add your CSS or JS links here -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-100">
     <!-- Include the header -->
@@ -13,10 +14,18 @@
 
     <main>
         <div class="flex mt-16">
+            <!-- Show success message only if there is one -->
+            @if (session('success'))
+                <x-alert type="success" :message="session('success')" />
+            @endif
+
+            <!-- Show error message only if there is one -->
+            @if (session('error'))
+                <x-alert type="error" :message="session('error')" />
+            @endif
+
             <!-- Sidebar -->
-            <aside class="fixed top-0 left-0 hidden w-full h-screen text-white bg-gray-700 md:w-64 md:relative md:block">
                 @include('partials.admin._sidebar')
-            </aside>
             <main class="flex-1 p-6">
                 <!-- Page content goes here -->
                 {{ $slot }}

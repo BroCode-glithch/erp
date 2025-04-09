@@ -13,6 +13,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -26,6 +27,16 @@
                     </div>
                 </header>
             @endisset
+
+            <!-- Show success message only if there is one -->
+            @if (session('success'))
+                <x-alert type="success" :message="session('success')" />
+            @endif
+
+            <!-- Show error message only if there is one -->
+            @if (session('error'))
+                <x-alert type="error" :message="session('error')" />
+            @endif
 
             <!-- Page Content -->
             <main>
