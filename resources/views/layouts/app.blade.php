@@ -11,35 +11,34 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- NotifyCSS -->
-        @notifyC
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="font-sans antialiased">
+        <!-- SweetAlert notifications -->
+        @include('sweetalert::alert')
+
+        <!-- Preloader -->
+        <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
+            <div class="text-6xl font-bold text-gray-800 animate-wavy-text">
+                <span class="wave">E</span>
+                <span class="delay-100 wave">R</span>
+                <span class="delay-200 wave">P</span>
+            </div>
+        </div>
+
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="bg-white shadow dark:bg-gray-800">
+                    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
-
-            <!-- Show success message only if there is one -->
-            {{--  @if (session('success'))
-                <x-alert type="success" :message="session('success')" />
-            @endif  --}}
-
-            <!-- Show error message only if there is one -->
-            {{--  @if (session('error'))
-                <x-alert type="error" :message="session('error')" />
-            @endif  --}}
 
             <!-- Page Content -->
             <main>
@@ -47,7 +46,13 @@
             </main>
         </div>
 
-        @notifyJs
-        <x:notify-messages />
+        <script>
+            window.addEventListener('load', function () {
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('opacity-0');
+                setTimeout(() => preloader.style.display = 'none', 500);
+            });
+        </script>
+
     </body>
 </html>

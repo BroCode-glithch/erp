@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RegisteredUserController extends Controller
 {
@@ -52,30 +53,34 @@ class RegisteredUserController extends Controller
         if (Role::where('name', $role)->exists()) {
             $user->assignRole($role);
         } else {
-            return redirect()->route('register')->with('error', 'Invalid Role'); // log or notify that an invalid role was sent
+            // If role doesn't exist, show error alert
+            Alert::error('Invalid Role', 'The selected role does not exist. Please try again.');
+            return redirect()->route('register');
         }
 
+        // Fire the Registered event
         event(new Registered($user));
 
         // Login the user
         Auth::login($user);
 
-        // Redirect based on the role
+        // Redirect based on the role and show success message
         if ($user->hasRole('admin')) {
-            notify()->info('Account registered successfully!');
-            notify()->success('Welcome ' . $user->name);
-            return redirect()->route('admin.dashboard'); // Redirects user to the admin dashboard based on role
+            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
+                ->showConfirmButton('Cool');
+            return redirect()->route('admin.dashboard'); // Redirect to admin dashboard
         } elseif ($user->hasRole('program-manager')) {
-            notify()->info('Account registered successfully!');
-            notify()->success('Welcome ' . $user->name);
-            return redirect()->route('program-manager.dashboard'); // Redirects user to program manager dashboard based on role
-        } elseif ($user->hasRole('support')) {
-            notify()->info('Account registered successfully!');
-            notify()->success('Welcome ' . $user->name);
-            return redirect()->route('support.dashboard'); // Redirects user to care support dsahboard based on role
+            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
+            ->showConfirmButton('Cool');
+            return redirect()->route('program-manager.dashboard'); // Redirect to program manager dashboard
+        } elseif ($user->hasRole('care-support')) {
+            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
+            ->showConfirmButton('Cool');
+            return redirect()->route('care-support.dashboard'); // Redirect to care support dashboard
         } else {
-            notify()->error('Oops! User has no role.', 'error');
-            return redirect()->route('dashboard'); // default laravel dashboard
+            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
+                ->showConfirmButton('Cool');
+            return redirect()->route('dashboard'); // Default dashboard
         }
     }
 }

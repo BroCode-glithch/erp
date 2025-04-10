@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -30,21 +31,24 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
-
+        // Displaying SweetAlert message based on role
         if ($user->hasRole('admin')) {
-            notify()->success('Welcome back, ' . $user->name . '!', 'Success');
+            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
+            ->showConfirmButton('Cool');
             return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('program-manager')) {
-            notify()->success('Welcome back, ' . $user->name . '!', 'Success');
+            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
+            ->showConfirmButton('Cool');
             return redirect()->route('pm.dashboard');
         } elseif ($user->hasRole('support')) {
-            notify()->success('Welcome back, ' . $user->name . '!', 'Success');
+            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
+            ->showConfirmButton('Cool');
             return redirect()->route('care.dashboard');
         } else {
-            notify()->error('Oops! User has no role.', 'error');
+            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
+            ->showConfirmButton('Cool');
             return redirect()->route('user.dashboard');
         }
-
     }
 
     /**
@@ -55,10 +59,10 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        notify()->success('Logout successful.', 'Success');
+        Alert::html('Logout Successful!', '<p>You have successfully logged out.</p>', 'success')
+                ->showConfirmButton('Cool');
         return redirect('/');
     }
 }
