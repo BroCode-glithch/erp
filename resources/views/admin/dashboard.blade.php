@@ -3,6 +3,25 @@
         <h2 class="text-xl font-semibold text-gray-800">Admin Dashboard</h2>
     </x-slot>
 
+    @if (auth()->user()->notifications->count())
+        <div class="px-4 mx-auto mt-6 max-w-7xl sm:px-6 lg:px-8">
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Recent Notifications</h3>
+                <ul class="space-y-2">
+                    <form action="{{ route('notifications.read') }}" method="POST" class="mb-3">
+                        @csrf
+                        <button type="submit" class="text-sm text-blue-600 hover:underline">Mark all as read</button>
+                    </form>                    
+                    @foreach (auth()->user()->notifications->take(5) as $notification)
+                        <li class="p-3 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-600">
+                            {{ $notification->data['message'] ?? 'New activity on your account.' }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
     <div class="py-6">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
