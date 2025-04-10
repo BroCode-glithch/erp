@@ -1,5 +1,5 @@
-<section>
-    <header>
+<section class="h-full">
+    <header class="mb-4">
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Profile Information') }}
         </h2>

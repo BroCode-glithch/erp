@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,8 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100">
+
+<body x-data="{ sidebarOpen: true }" class="bg-gray-100">
     <!-- SweetAlert notifications -->
     @include('sweetalert::alert')
 
@@ -26,14 +28,13 @@
         </div>
     </div>
 
- 
+
     <main>
-        <div class="flex mt-2">
+        <div class="flex mt-0">
 
             <!-- Sidebar -->
-            <aside class="fixed top-0 left-0 hidden w-full h-screen text-white bg-gray-700 md:w-64 md:relative md:block">
-                @include('partials.admin._sidebar')
-            </aside>
+               @include('partials.admin._sidebar')
+               
             <main class="flex-1 p-6">
                 <!-- Page content goes here -->
                 {{ $slot }}
@@ -46,12 +47,13 @@
 
     <!-- Preloader -->
     <script>
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function() {
             const preloader = document.getElementById('preloader');
             preloader.classList.add('opacity-0');
             setTimeout(() => preloader.style.display = 'none', 500);
         });
     </script>
-    
+
 </body>
+
 </html>

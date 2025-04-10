@@ -1,15 +1,10 @@
 <!-- resources/views/partials/admin/_header.blade.php -->
 <header class="p-4 text-white bg-gray-800">
     <div class="flex items-center justify-between">
-        <h1 class="text-xl font-semibold">Admin Dashboard</h1>
-        {{--  <div class="flex items-center">
-            <!-- Example user profile section -->
-            <span class="mr-4">Welcome, {{ Auth::user()->name }}</span>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit">Logout</button>
-            </form>
-        </div>  --}}
+        <a href="{{ route('admin.dashboard') }}">
+            <h1 class="text-xl font-semibold">{{ env('APP_NAME') }}</h1>
+        </a>
+        
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">
                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
@@ -24,7 +19,7 @@
             </x-slot>
     
             <x-slot name="content">
-                <x-dropdown-link :href="route('profile.edit')">
+                <x-dropdown-link :href="route('admin.profile.edit')">
                     {{ __('Profile') }}
                 </x-dropdown-link>
     
