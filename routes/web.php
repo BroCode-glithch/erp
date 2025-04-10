@@ -12,7 +12,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Profile Routes
@@ -22,18 +22,9 @@ Route::get('/dashboard', function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-
-Route::middleware(['auth', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
-    Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('dashboard');
-});
-
-Route::middleware(['auth', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
-    Route::get('/dashboard', [CareSupportController::class, 'index'])->name('dashboard');
-});
-
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
-    
+
     // Roles
     Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
 
@@ -53,6 +44,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Reports
     Route::get('/reports', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
 });
+
+
+Route::middleware(['auth', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
+    Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('dashboard');
+});
+
+Route::middleware(['auth', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
+    Route::get('/dashboard', [CareSupportController::class, 'index'])->name('dashboard');
+});
+
 
 
 

@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
+use Carbon\Carbon;
+use App\Notifications\LoginNotification;
+use Illuminate\Support\Facades\Http;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -26,29 +30,54 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
         $user = $request->user();
 
-        // Displaying SweetAlert message based on role
-        if ($user->hasRole('admin')) {
-            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
+        // Get IP and location
+        $ip = $request->ip();
+        $location = $this->getUserLocation($ip);
+
+        // Send notification
+        $user->notify(new LoginNotification($location));
+
+        $message = 'Welcome, ' . $user->name . '! You have successfully logged in.';
+
+        // 🔥 Flash for Livewire or Blade-based alerts
+        session()->flash('message', $message);
+
+        // 🎉 SweetAlert UI
+        Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
             ->showConfirmButton('Cool');
+
+        // 🎯 Role-based redirects
+        if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('program-manager')) {
-            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
-            ->showConfirmButton('Cool');
             return redirect()->route('pm.dashboard');
         } elseif ($user->hasRole('support')) {
-            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
-            ->showConfirmButton('Cool');
             return redirect()->route('care.dashboard');
         } else {
-            Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
-            ->showConfirmButton('Cool');
             return redirect()->route('user.dashboard');
         }
+    }
+
+    protected function getUserLocation($ip)
+    {
+        $key = env('IPSTACK_KEY');
+        $response = Http::get("http://api.ipstack.com/{$ip}?access_key={$key}");
+
+        if ($response->ok()) {
+            $data = $response->json();
+            $city = $data['city'] ?? 'Unknown City';
+            $region = $data['region_name'] ?? 'Unknown Region';
+            $country = $data['country_name'] ?? 'Unknown Country';
+            $time = Carbon::now()->toDayDateTimeString();
+
+            return "{$time} from {$city}, {$region}, {$country}";
+        }
+
+        return Carbon::now()->toDayDateTimeString() . " from Unknown Location";
     }
 
     /**
@@ -57,12 +86,16 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        // 🔥 Flash for Livewire support
+        session()->flash('message', 'You have been logged out.');
+
+        // 🎉 SweetAlert
         Alert::html('Logout Successful!', '<p>You have successfully logged out.</p>', 'success')
-                ->showConfirmButton('Cool');
+            ->showConfirmButton('Cool');
+
         return redirect('/');
     }
 }

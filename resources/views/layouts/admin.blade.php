@@ -7,12 +7,27 @@
     <title>Admin Dashboard</title>
     <!--  CSS or JS  -->
 
+    <script src="//unpkg.com/alpinejs" defer></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body x-data="{ sidebarOpen: true }" class="bg-gray-100">
+    @if (session()->has('message'))
+        <div
+            x-data="{ show: true }"
+            x-init="setTimeout(() => show = false, 4000)"
+            x-show="show"
+            class="fixed bottom-6 right-6 z-50 px-6 py-4 bg-green-500 border border-green-700 text-white rounded-lg shadow-lg transition transform duration-500 ease-in-out"
+        >
+            <div class="font-semibold text-lg">
+                {{ session('message') }}
+            </div>
+        </div>
+    @endif
+
+
     <!-- SweetAlert notifications -->
     @include('sweetalert::alert')
 
@@ -34,7 +49,7 @@
 
             <!-- Sidebar -->
                @include('partials.admin._sidebar')
-               
+
             <main class="flex-1 p-6">
                 <!-- Page content goes here -->
                 {{ $slot }}

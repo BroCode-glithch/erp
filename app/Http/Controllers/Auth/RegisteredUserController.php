@@ -64,22 +64,20 @@ class RegisteredUserController extends Controller
         // Login the user
         Auth::login($user);
 
+        $user = $request->user();
+        $message = $user->name . ', account registered! You have successfully logged in.';
+
+        // 🔥 Flash for Livewire or Blade-based alerts
+        session()->flash('message', $message);
+
         // Redirect based on the role and show success message
         if ($user->hasRole('admin')) {
-            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
-                ->showConfirmButton('Cool');
             return redirect()->route('admin.dashboard'); // Redirect to admin dashboard
         } elseif ($user->hasRole('program-manager')) {
-            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
-            ->showConfirmButton('Cool');
             return redirect()->route('program-manager.dashboard'); // Redirect to program manager dashboard
         } elseif ($user->hasRole('care-support')) {
-            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
-            ->showConfirmButton('Cool');
             return redirect()->route('care-support.dashboard'); // Redirect to care support dashboard
         } else {
-            Alert::html('Account Registered!', '<p>You have successfully logged in.</p>', 'success')
-                ->showConfirmButton('Cool');
             return redirect()->route('dashboard'); // Default dashboard
         }
     }

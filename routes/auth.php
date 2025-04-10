@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 

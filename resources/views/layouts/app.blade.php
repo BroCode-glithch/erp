@@ -13,32 +13,24 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <!-- Styles -->
+        @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <!-- SweetAlert notifications -->
-        @include('sweetalert::alert')
+        <x-banner />
 
-        <!-- Preloader -->
-        <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
-            <div class="text-6xl font-bold text-gray-800 animate-wavy-text">
-                <span class="wave">E</span>
-                <span class="delay-100 wave">R</span>
-                <span class="delay-200 wave">P</span>
-            </div>
-        </div>
-
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+        <div class="min-h-screen bg-gray-100">
+            @livewire('navigation-menu')
 
             <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow dark:bg-gray-800">
-                    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            @if (isset($header))
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endisset
+            @endif
 
             <!-- Page Content -->
             <main>
@@ -46,13 +38,8 @@
             </main>
         </div>
 
-        <script>
-            window.addEventListener('load', function () {
-                const preloader = document.getElementById('preloader');
-                preloader.classList.add('opacity-0');
-                setTimeout(() => preloader.style.display = 'none', 500);
-            });
-        </script>
+        @stack('modals')
 
+        @livewireScripts
     </body>
 </html>
