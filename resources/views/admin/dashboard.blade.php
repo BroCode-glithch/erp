@@ -5,15 +5,15 @@
 
     @if (auth()->user()->notifications->count())
         <div class="px-4 mx-auto mt-6 max-w-7xl sm:px-6 lg:px-8">
-            <div class="bg-white shadow-md rounded-lg p-4">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Recent Notifications</h3>
+            <div class="p-4 bg-white rounded-lg shadow-md">
+                <h3 class="mb-2 text-lg font-semibold text-gray-700">Recent Notifications</h3>
                 <ul class="space-y-2">
-                    <form action="{{ route('notifications.read') }}" method="POST" class="mb-3">
+                    <form action="{{ route('admin.notifications.read') }}" method="POST" class="mb-3">
                         @csrf
                         <button type="submit" class="text-sm text-blue-600 hover:underline">Mark all as read</button>
                     </form>                    
-                    @foreach (auth()->user()->notifications->take(5) as $notification)
-                        <li class="p-3 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-600">
+                    @foreach (auth()->user()->notifications->take(2) as $notification)
+                        <li class="p-3 text-sm text-gray-600 border border-gray-200 rounded-md bg-gray-50">
                             {{ $notification->data['message'] ?? 'New activity on your account.' }}
                         </li>
                     @endforeach

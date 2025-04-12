@@ -40,10 +40,10 @@ class LoginNotification extends Notification
         return (new MailMessage)
             ->subject('⚠️ New Login Detected!!!')
             ->greeting('Hello ' . $notifiable->name . ',')
-            ->line('We detected a new login to your account at:')
+            ->line('We detected a new login to your account on:')
             ->line($this->location)
-            ->action('Notification Action', url('/'))
-            ->line("If this wasn't you, kindly reset your password immediately using the reset link below:");
+            ->line("If this wasn't you, kindly reset your password immediately using the reset link below:")
+            ->action('Reset Password',  route('password.email'));
     }
 
     public function toDatabase($notifiable)

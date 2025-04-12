@@ -62,10 +62,33 @@ class AuthenticatedSessionController extends Controller
         }
     }
 
+    // protected function getUserLocation($ip)
+    // {
+    //     $key = env('IPSTACK_KEY');
+    //     $response = Http::get("https://api.ipstack.com/{$ip}?access_key={$key}");
+
+    //     if ($response->ok()) {
+    //         $data = $response->json();
+    //         $city = $data['city'] ?? 'Unknown City';
+    //         $region = $data['region_name'] ?? 'Unknown Region';
+    //         $country = $data['country_name'] ?? 'Unknown Country';
+    //         $time = Carbon::now()->toDayDateTimeString();
+
+    //         return "{$time} from {$city}, {$region}, {$country}";
+    //     }
+
+    //     return Carbon::now()->toDayDateTimeString() . " from Unknown Location";
+    // }
+
+    // For Testing
     protected function getUserLocation($ip)
     {
+        if ($ip === '127.0.0.1' || $ip === '::1') {
+            return Carbon::now()->toDayDateTimeString() . " from Localhost";
+        }
+
         $key = env('IPSTACK_KEY');
-        $response = Http::get("http://api.ipstack.com/{$ip}?access_key={$key}");
+        $response = Http::withoutVerifying()->get("https://api.ipstack.com/{$ip}?access_key={$key}");
 
         if ($response->ok()) {
             $data = $response->json();
@@ -79,6 +102,7 @@ class AuthenticatedSessionController extends Controller
 
         return Carbon::now()->toDayDateTimeString() . " from Unknown Location";
     }
+
 
     /**
      * Destroy an authenticated session.

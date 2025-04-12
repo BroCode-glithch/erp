@@ -1,34 +1,33 @@
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+    @section('title', 'Forgot Password | ' . config('app.name'))
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-        </div>
+    <div class="relative z-10 w-full max-w-md p-8 space-y-6 border shadow-lg bg-white/10 backdrop-blur-md rounded-2xl fade-in border-white/30">
+        <video autoplay loop muted class="absolute w-full h-full object-cover rounded-2xl z-[-1] opacity-20">
+            <source src="{{ asset('videos/background-video.mp4') }}" type="video/mp4">
+        </video>
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
+        <h2 class="text-2xl font-bold text-center text-white">Reset your password</h2>
+
+        @if (session('status'))
+            <div class="mb-4 text-sm font-medium text-green-600">
+                {{ session('status') }}
             </div>
-        @endsession
+        @endif
 
-        <x-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
             @csrf
 
-            <div class="block">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <div>
+                <x-input-label for="email" :value="__('Email')" />
+                <x-text-input id="email" class="block w-full mt-1" type="email" name="email" required />
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
+            <div>
+                <x-primary-button class="justify-center w-full">
+                    Send Password Reset Link
+                </x-primary-button>
             </div>
         </form>
-    </x-authentication-card>
+    </div>
 </x-guest-layout>

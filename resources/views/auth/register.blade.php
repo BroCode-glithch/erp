@@ -1,60 +1,79 @@
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+    @section('title', 'Register | ' . config('app.name'))
 
-        <x-validation-errors class="mb-4" />
+    <!-- Main Content Area -->
+    <div class="relative flex items-center justify-center bg-black rounded-2xl">
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+        <!-- Register Form Container with Animation -->
+        <div class="relative w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-2xl fade-in-pop-up">
 
-            <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <!-- Video Background Inside the Form Container -->
+            <video autoplay loop muted class="absolute inset-0 z-0 object-cover w-full rounded-2xl h-full">
+                <source src="{{ asset('videos/background-video.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Form Content (In Front of the Video) -->
+            <div class="relative z-20">
+                <h2 class="feature-card text-2xl font-bold text-center text-white">CREATE YOUR ROLE BASED ACCOUNT</h2>
+
+                <!-- Session Status -->
+                <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                <form method="POST" action="{{ route('register') }}" class="space-y-4">
+                    @csrf
+
+                    <!-- Name -->
+                    <div class="feature-card">
+                        <x-input-label for="name" :value="__('Name')" style="color: #fff !important" />
+                        <x-text-input id="name" placeholder="James Doe" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="feature-card">
+                        <x-input-label for="emai :value="__('Email')" style="color: #fff !important" />
+                        <x-text-input id="email"  placeholder="user@erp.com" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
+
+                    <!-- Role Selection -->
+                    <div class="feature-card">
+                        <x-input-label for="role" :value="__('Select Role')" style="color: #fff !important" />
+                        <select id="role" name="role" required class="block mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="">-- Choose a Role --</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="program-manager" {{ old('role') == 'program-manager' ? 'selected' : '' }}>Program Manager</option>
+                            <option value="care-support" {{ old('role') == 'care-support' ? 'selected' : '' }}>Care Support</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                    </div>
+
+                    <!-- Password -->
+                    <div class="feature-card">
+                        <x-input-label for="password" :value="__('Password')" style="color: #fff !important" />
+                        <x-text-input id="password"  placeholder="**********" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="feature-card">
+                        <x-input-label for="password_confirmation" :value="__('Confirm Password')" style="color: #fff !important" />
+                        <x-text-input id="password_confirmation"  placeholder="**********" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <a class="underline text-sm text-blue-800 hover:text-gray-500" href="{{ route('login') }}">
+                            {{ __('Already registered?') }}
+                        </a>
+
+                        <x-primary-button class="ms-4 feature-card">
+                            {{ __('Register') }}
+                        </x-primary-button>
+                    </div>
+                </form>
             </div>
-
-            <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="mt-4">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-
-                            <div class="ms-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                ]) !!}
-                            </div>
-                        </div>
-                    </x-label>
-                </div>
-            @endif
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ms-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
+        </div>
+    </div>
 </x-guest-layout>

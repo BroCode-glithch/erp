@@ -10,9 +10,22 @@
 
 <body class="antialiased text-gray-800 bg-gray-100">
 
+    @if (session()->has('message'))
+        <div
+            x-data="{ show: true }"
+            x-init="setTimeout(() => show = false, 4000)"
+            x-show="show"
+            class="fixed z-50 px-6 py-4 text-white transition duration-500 ease-in-out transform bg-green-500 border border-green-700 rounded-lg shadow-lg bottom-6 right-6"
+        >
+            <div class="text-lg font-semibold">
+                {{ session('message') }}
+            </div>
+        </div>
+    @endif
+
     @include('layouts.navigation')
 
-    <div class="flex flex-col mt-8 items-center justify-center min-h-screen px-6 py-12">
+    <div class="flex flex-col items-center justify-center min-h-screen px-6 py-12 mt-8">
 
         <!-- Hero Section -->
         <div class="max-w-4xl text-center animate-fade-in-up">
@@ -42,7 +55,7 @@
 
             @foreach ($features as $index => $feature)
                 <div
-                    class="feature-card flex items-start p-6 space-x-4 bg-white rounded-lg shadow-md transform transition duration-300 hover:scale-105 cursor-pointer"
+                    class="flex items-start p-6 space-x-4 transition duration-300 transform bg-white rounded-lg shadow-md cursor-pointer feature-card hover:scale-105"
                     style="animation-delay: {{ $index * 0.3 }}s;">
                     <span class="text-xl text-green-500">✅</span>
                     <p class="text-sm text-gray-800">{{ $feature }}</p>
@@ -68,11 +81,24 @@
             @endguest
 
             @auth
-                <a href="{{ route('login') }}"
-                    class="inline-block px-8 py-3 text-lg font-semibold text-white transition bg-indigo-600 rounded-lg shadow hover:bg-indigo-700">
-                    Dashboard
-                </a>
-            @endauth
+            @php
+                $user = Auth::user();
+                if ($user->hasRole('admin')) {
+                    $dashboardRoute = route('admin.dashboard');
+                } elseif ($user->hasRole('care-support')) {
+                    $dashboardRoute = route('care.dashboard');
+                } elseif ($user->hasRole('program-manager')) {
+                    $dashboardRoute = route('pm.dashboard');
+                } else {
+                    $dashboardRoute = url('/'); // fallback or maybe a generic dashboard
+                }
+            @endphp
+
+            <a href="{{ $dashboardRoute }}"
+                class="inline-block px-8 py-3 text-lg font-semibold text-white transition bg-indigo-600 rounded-lg shadow hover:bg-indigo-700">
+                Dashboard
+            </a>
+        @endauth
         </div>
 
         <!-- Footer -->

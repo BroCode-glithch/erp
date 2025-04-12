@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProgramManagerController;
-use App\Http\Controllers\CareSupportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CareSupportController;
+use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\ProgramManagerController;
+use App\Http\Controllers\Admin\NotificationController;
 
 // Home and Dashboard
 Route::get('/', function () {
@@ -14,6 +16,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 // Profile Routes
 // Route::middleware('auth')->group(function () {
@@ -46,6 +49,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 
+Route::middleware('auth')->group(function () {
+    Route::get('2fa/setup', [TwoFactorController::class, 'show2FASetup'])->name('2fa.setup');
+    Route::post('2fa/verify', [TwoFactorController::class, 'verify2FA'])->name('verify2fa');
+});
+
+
 Route::middleware(['auth', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
     Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('dashboard');
 });
@@ -53,6 +62,12 @@ Route::middleware(['auth', 'role:program-manager'])->prefix('pm')->name('pm.')->
 Route::middleware(['auth', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
     Route::get('/dashboard', [CareSupportController::class, 'index'])->name('dashboard');
 });
+
+
+// routes/web.php
+Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('admin.notifications.read');
+// routes/web.php
+Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
 
 

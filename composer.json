@@ -8,12 +8,12 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^12.0",
-        "laravel/jetstream": "^5.3",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.0",
         "maatwebsite/excel": "^3.1",
         "realrashid/sweet-alert": "^7.3",
+        "robthree/twofactorauth": "^3.0",
         "spatie/laravel-permission": "^6.16",
         "yoeunes/toastr": "^3.1"
     },
