@@ -1,0 +1,2 @@
+[31-May-2025 15:38:06 UTC] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/jjvqcarn/public_html/erp/vendor/laravel/framework/src/Illuminate/Log/LogManager.php on line 631
+[31-May-2025 15:38:32 UTC] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/jjvqcarn/public_html/erp/vendor/laravel/framework/src/Illuminate/Log/LogManager.php on line 631
