@@ -5,7 +5,11 @@
        ::class="{ '-translate-x-full': !sidebarOpen && window.innerWidth < 768 }">
 
     <div class="px-6 py-4 text-xl font-bold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700">
-        <a href="{{ route('admin.dashboard') }}">ERP Admin</a>
+        <a href="{{ route('admin.dashboard') }}">
+            <div class="logo-circle" style="width: 50px !important; height: 50px !important;">
+                ERP
+            </div>
+        </a>
     </div>
 
     <nav class="px-4 py-4 space-y-2">
@@ -31,11 +35,11 @@
                 </svg>
             </button>
             <div x-show="openMenu === 'roles'" x-collapse class="ml-4 mt-2 space-y-1 text-sm">
-                <a href="#"
+                <a href="{{ route('admin.roles.index') }}"
                 class="block px-2 py-1 text-gray-600 dark:text-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
                     All Roles
                 </a>
-                <a href="#"
+                <a href="{{ route('admin.permissions.index') }}"
                 class="block px-2 py-1 text-gray-600 dark:text-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
                     Permissions
                 </a>

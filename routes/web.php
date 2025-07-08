@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\Admin\DepartmentController;
-use App\Http\Controllers\Admin\NotificationController;
-use App\Http\Controllers\Admin\ProgramController;
-use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\TwoFactorController;
-use App\Http\Controllers\CareSupportController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProgramManagerController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CareSupportController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\ProgramManagerController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\NotificationController;
 
 
 
@@ -39,6 +40,9 @@ Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.'
     // Roles
     Route::resource('roles', RoleController::class);
 
+    // Permissions
+    Route::resource('permissions', PermissionController::class)->except(['show']);
+
     // Users
     Route::resource('users', UserController::class);
 
@@ -48,12 +52,9 @@ Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.'
     // Programs
     Route::resource('programs', ProgramController::class);
 
-    // routes/web.php
     Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('notifications.read');
 
-    // 2FA toggle for users
     Route::post('/users/{user}/toggle-2fa', [SettingController::class, 'toggle2FA'])->name('users.toggle2fa');
-
 
     // Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
@@ -62,6 +63,7 @@ Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.'
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
+
 
     // routes/web.php
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');

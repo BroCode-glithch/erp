@@ -99,7 +99,6 @@
     </div>
 </div>
 
-{{--  Department  --}}
 {{-- Department --}}
 <div class="px-4 py-6 sm:px-6 lg:px-8">
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
@@ -108,7 +107,23 @@
             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Departments</h2>
             <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
                 <input type="text" placeholder="Search by name, ID, or description..." class="w-full md:w-64 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Add Department</button>
+                <div class="flex flex-wrap gap-2">
+                    <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
+                        Export PDF
+                    </a>
+
+                    <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-sm">
+                        Export Excel
+                    </a>
+
+                    <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
+                        Export XML
+                    </a>
+                    
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+                        Add Department
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -164,7 +179,23 @@
             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Users</h2>
             <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
                 <input type="text" placeholder="Search by name, email, or role..." class="w-full md:w-64 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Add User</button>
+                <div class="flex flex-wrap gap-2">
+                    <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
+                        Export PDF
+                    </a>
+
+                    <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-sm">
+                        Export Excel
+                    </a>
+
+                    <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
+                        Export XML
+                    </a>
+                    
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+                        Add User
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -223,7 +254,23 @@
             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Programs</h2>
             <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
                 <input type="text" placeholder="Search programs..." class="w-full md:w-64 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Create Program</button>
+                <div class="flex flex-wrap gap-2">
+                    <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
+                        Export PDF
+                    </a>
+
+                    <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-sm">
+                        Export Excel
+                    </a>
+
+                    <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
+                        Export XML
+                    </a>
+                    
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+                        Create Program
+                    </a>
+                </div>
             </div>
         </div>
 
