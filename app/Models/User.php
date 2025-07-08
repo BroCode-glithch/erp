@@ -63,4 +63,10 @@ class User extends Authenticatable
             'two_factor_enabled' => 'boolean',
         ];
     }
+
+    public function hasVerifiedTwoFactor()
+    {
+        // You can adjust this logic based on your actual setup
+        return !is_null($this->two_factor_secret) && $this->two_factor_verified_at != null;
+    }
 }

@@ -2,7 +2,7 @@
     @section('title', 'Login | ' . config('app.name'))
 
     <!-- Main Content Area -->
-    <div class="relative flex items-center justify-center bg-black rounded-2xl">
+    <div class="relative flex items-center justify-center bg-white rounded-2xl">
 
         <!-- Login Form Container with Animation -->
         <div class="relative w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-2xl fade-in-pop-up">

@@ -33,37 +33,42 @@ class TwoFactorController extends Controller
         // Return the view with the QR code and setup instructions
         return view('auth.2fa-setup', compact('qrCode'));
     }
+    
 
-    public function verify2FA(Request $request)
+    public function verify2FACode(Request $request)
     {
         $tfa = new TwoFactorAuth(env('APP_NAME'));
         $user = Auth::user();
         $secret = session('2fa_secret');
-
+    
         // Validate the code entered by the user
         $valid = $tfa->verifyCode($secret, $request->input('code'));
-
+    
         if ($valid) {
-            // Save the secret in the user's database record
+            // Save the secret in the user's database record and enable 2FA
             $user->two_factor_enabled = true;
             $user->two_factor_secret = $secret;
+            $user->two_factor_verified_at = now(); // Set the verified timestamp
             $user->save();
-
-            $message = 'Status, ' . $user->name . '2FA has been enabled.';
-
-             // 🔥 Flash for Livewire or Blade-based alerts
+    
+            $message = 'Status, ' . $user->name . ' 2FA has been enabled and verified successfully.';
+    
+            // Flash for Livewire or Blade-based alerts
             session()->flash('message', $message);
-
-            if($user->hasRole('admin')) {
-                return redirect()->route(route: 'admin.dashboard');
-            } elseif ($user->hasRole('program-manager')){
-                return redirect()->route(route: 'pm.dashboard');
-            } elseif($user->hasRole('care-support')) {
-                return redirect()->route(route: 'care.dashboard');
+    
+            // Role-based redirection
+            if ($user->hasRole('admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->hasRole('program-manager')) {
+                return redirect()->route('pm.dashboard');
+            } elseif ($user->hasRole('care-support')) {
+                return redirect()->route('care.dashboard');
+            } else {
+                return redirect()->route('user.dashboard');
             }
         } else {
             return back()->withErrors(['code' => 'Invalid code, please try again.']);
         }
     }
-
+    
 }

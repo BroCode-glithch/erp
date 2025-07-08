@@ -29,9 +29,13 @@
                 <div class="flex items-center px-4 py-1 space-x-3">
                     <a href="#" class="relative" data-dropdown-toggle="notificationsDropdown">
                         <i class="text-2xl fas fa-bell"></i>
-                        @if(auth()->user()->unreadNotifications->count() > 0)
+                        @php
+                            $unreadCount = auth()->user()->unreadNotifications->count();
+                        @endphp
+                        
+                        @if($unreadCount > 0)
                             <span class="absolute top-0 right-0 inline-block w-5 h-5 text-xs text-center text-gray-800 bg-red-500 rounded-full">
-                                {{ auth()->user()->unreadNotifications->count() }}
+                                {{ $unreadCount }}
                             </span>
                         @endif
                     </a>
@@ -41,12 +45,12 @@
                 <div id="notificationsDropdown" class="absolute right-0 hidden w-64 mt-2 bg-white border rounded-md shadow-md">
                     <ul class="p-3 space-y-2">
                         <!-- Mark All as Read Button -->
-                        <form action="{{ route('admin.notifications.read') }}" method="POST" class="mb-3">
+                        <<form id="markAllAsReadForm" action="{{ route('admin.notifications.read') }}" method="POST">
                             @csrf
                             <button type="submit" class="w-full text-sm text-left text-blue-600 hover:underline">
                                 Mark all as read
                             </button>
-                        </form> 
+                        </form>
 
                         @if(auth()->user()->unreadNotifications->isEmpty())
                             <li class="p-3 text-sm text-gray-600 border border-gray-200 rounded-md bg-gray-50">
@@ -72,6 +76,11 @@
                     {{ __('Profile') }}
                 </x-dropdown-link>
 
+                <!-- User Settings Link -->
+                <x-dropdown-link :href="route('admin.settings.index')">
+                    {{ __('Settings') }}
+                </x-dropdown-link>
+
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -88,18 +97,28 @@
 
 <!-- Add JavaScript to toggle notification dropdown -->
 <script>
-    document.querySelector('[data-dropdown-toggle="notificationsDropdown"]').addEventListener('click', function () {
-        const dropdown = document.getElementById('notificationsDropdown');
-        dropdown.classList.toggle('hidden');
-    });
-
-    // Optionally, add a close handler when clicking outside of the dropdown
-    window.addEventListener('click', function(e) {
-        if (!e.target.closest('[data-dropdown-toggle="notificationsDropdown"]') && !e.target.closest('#notificationsDropdown')) {
-            const dropdown = document.getElementById('notificationsDropdown');
-            if (!dropdown.classList.contains('hidden')) {
-                dropdown.classList.add('hidden');
+    document.getElementById('markAllAsReadForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const response = await fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': this.querySelector('[name="_token"]').value,
+                'Accept': 'application/json',
             }
+        });
+
+        if (response.ok) {
+            // Remove all notification items and badge count
+            document.querySelectorAll('#notificationsDropdown li').forEach(li => li.remove());
+            document.querySelector('#notificationsDropdown ul').innerHTML = `
+                <li class="p-3 text-sm text-gray-600 border border-gray-200 rounded-md bg-gray-50">
+                    No new notifications.
+                </li>
+            `;
+
+            const badge = document.querySelector('.fa-bell + span');
+            if (badge) badge.remove(); // Remove red badge count
         }
     });
 </script>

@@ -29,28 +29,35 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Authenticate the user
         $request->authenticate();
         $request->session()->regenerate();
-
+    
         $user = $request->user();
-
+    
+        // If the user has 2FA enabled but hasn't verified it yet
+        if ($user->two_factor_secret && !$user->hasVerifiedTwoFactor()) {
+            // Redirect to the 2FA setup/verification page
+            return redirect()->route('2fa.setup'); // Ensure this route exists
+        }
+    
         // Get IP and location
         $ip = $request->ip();
         $location = $this->getUserLocation($ip);
-
+    
         // Send notification
         $user->notify(new LoginNotification($location));
-
+    
         $message = 'Welcome, ' . $user->name . '! You have successfully logged in.';
-
-        // 🔥 Flash for Livewire or Blade-based alerts
+    
+        // Flash for Livewire or Blade-based alerts
         session()->flash('message', $message);
-
-        // 🎉 SweetAlert UI
+    
+        // SweetAlert UI
         Alert::html('Welcome, ' . $user->name . '!', '<p>You have successfully logged in.</p>', 'success')
             ->showConfirmButton('Cool');
-
-        // 🎯 Role-based redirects
+    
+        // Role-based redirects
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('program-manager')) {
@@ -61,7 +68,8 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('user.dashboard');
         }
     }
-
+    
+    
     // protected function getUserLocation($ip)
     // {
     //     $key = env('IPSTACK_KEY');

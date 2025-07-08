@@ -32,7 +32,7 @@
 
                     <!-- Email Address -->
                     <div class="feature-card">
-                        <x-input-label for="emai :value="__('Email')" style="color: #fff !important" />
+                        <x-input-label for="email" :value="__('Email')" style="color: #fff !important" />
                         <x-text-input id="email"  placeholder="user@erp.com" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
@@ -68,7 +68,7 @@
                             {{ __('Already registered?') }}
                         </a>
 
-                        <x-primary-button class="ms-4 feature-card">
+                        <x-primary-button class="ms-8 feature-card">
                             {{ __('Register') }}
                         </x-primary-button>
                     </div>

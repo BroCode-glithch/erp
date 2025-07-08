@@ -17,6 +17,7 @@
 
 <body x-data="{ sidebarOpen: true }" class="bg-gray-100">
     @if (session()->has('message'))
+
         <div
             x-data="{ show: true }"
             x-init="setTimeout(() => show = false, 4000)"

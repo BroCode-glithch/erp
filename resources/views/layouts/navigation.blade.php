@@ -40,6 +40,11 @@
                    class="text-sm font-medium text-gray-600 transition dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
                     Features
                 </a>
+
+                <button id="theme-toggle" class="p-2">
+                    <x-heroicon-o-sun id="theme-toggle-light" class="hidden size-5 text-yellow-500" />
+                    <x-heroicon-o-moon id="theme-toggle-dark" class="size-5 text-gray-900 dark:text-gray-800" />
+                </button>
             </div>
 
             <!-- Mobile Toggle Button -->
@@ -85,7 +90,7 @@
 
             @auth
             @php
-            
+
                 $user = Auth::user();
                 if($user->hasRole('admin')) {
                     $dashboardRoute = route('admin.dashboard');

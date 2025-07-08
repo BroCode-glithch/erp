@@ -1,12 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CareSupportController;
-use App\Http\Controllers\Auth\TwoFactorController;
-use App\Http\Controllers\ProgramManagerController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\CareSupportController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProgramManagerController;
+use Illuminate\Support\Facades\Route;
+
+
 
 // Home and Dashboard
 Route::get('/', function () {
@@ -25,28 +33,38 @@ Route::get('/dashboard', function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
 
     // Roles
-    Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('roles', RoleController::class);
 
     // Users
-    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::resource('users', UserController::class);
 
     // Departments
-    Route::resource('departments', \App\Http\Controllers\Admin\DepartmentController::class);
+    Route::resource('departments', DepartmentController::class);
 
     // Programs
-    Route::resource('programs', \App\Http\Controllers\Admin\ProgramController::class);
+    Route::resource('programs', ProgramController::class);
+
+    // routes/web.php
+    Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('notifications.read');
+
+    // 2FA toggle for users
+    Route::post('/users/{user}/toggle-2fa', [SettingController::class, 'toggle2FA'])->name('users.toggle2fa');
+
 
     // Settings
-    Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
-    Route::post('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'store'])->name('settings.store');
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
     // Reports
-    Route::get('/reports', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
+
+    // routes/web.php
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
 
 Route::middleware('auth')->group(function () {
@@ -54,20 +72,23 @@ Route::middleware('auth')->group(function () {
     Route::post('2fa/verify', [TwoFactorController::class, 'verify2FA'])->name('verify2fa');
 });
 
+// 2FA Verification (after login)
+Route::get('2fa/verify', function () {
+    return view('auth.2fa-verify'); // Make sure this view exists
+})->middleware('auth')->name('2fa.verify');
 
-Route::middleware(['auth', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
+Route::post('2fa/verify', [TwoFactorController::class, 'verify2FACode'])->middleware('auth')->name('2fa.verify.code');
+
+
+
+Route::middleware(['auth', '2fa', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
     Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('dashboard');
 });
 
-Route::middleware(['auth', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
+Route::middleware(['auth', '2fa', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
     Route::get('/dashboard', [CareSupportController::class, 'index'])->name('dashboard');
 });
 
-
-// routes/web.php
-Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('admin.notifications.read');
-// routes/web.php
-Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
 
 
