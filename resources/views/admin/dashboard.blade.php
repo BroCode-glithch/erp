@@ -129,8 +129,12 @@
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">Human Resources</td>
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Handles hiring, onboarding, and HR policies.</td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
-                            <button class="text-blue-500 hover:text-blue-700">Edit</button>
-                            <button class="text-red-500 hover:text-red-700">Delete</button>
+                            <button class="px-3 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">
+                                Edit
+                            </button>
+                            <button class="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                     <tr>
@@ -183,8 +187,12 @@
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">john@example.com</td>
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">Admin</td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
-                            <button class="text-blue-500 hover:text-blue-700">Edit</button>
-                            <button class="text-red-500 hover:text-red-700">Delete</button>
+                            <button class="px-3 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">
+                                Edit
+                            </button>
+                            <button class="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                     <tr>
@@ -238,8 +246,12 @@
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">Human Resources</td>
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Introduces new employees to the company.</td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
-                            <button class="text-blue-500 hover:text-blue-700">Edit</button>
-                            <button class="text-red-500 hover:text-red-700">Delete</button>
+                            <button class="px-3 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">
+                                Edit
+                            </button>
+                            <button class="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                     <tr>
