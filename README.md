@@ -62,7 +62,7 @@ This project is a **role-based ERP dashboard system** built with Laravel, design
 - **Blade** (templating)
 - **Tailwind CSS** (UI styling)
 - **PHP 8+**
-- **MySQL** (future integration)
+- **MySQL**
 
 ---
 
@@ -71,7 +71,7 @@ This project is a **role-based ERP dashboard system** built with Laravel, design
 ### Clone & Install
 
 ```bash
-git clone git@github.com:YourUsername/erp.git
+git clone git@github.com:BroCode-glithch/erp.git
 cd erp
 composer install
 cp .env.example .env
@@ -91,16 +91,12 @@ Start local server
 php artisan serve
 
 
----
-
 💻 Screenshots (Coming Soon)
 
 > UI will include screenshots of each dashboard section: departments, programs, and users.
 
 
 
-
----
 
 📌 Project Roadmap
 
@@ -128,8 +124,6 @@ php artisan serve
 
 
 
----
-
 📖 About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. Laravel takes the pain out of development by easing common tasks like:
@@ -150,24 +144,11 @@ Broadcasting
 Learn Laravel | Laravel Bootcamp | Laracasts
 
 
----
-
 🤝 Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 
----
-
 🛡️ License
 
 This project is open-sourced under the MIT license.
-
----
-
-Let me know if you'd like to add:
-
-- Live demo link
-- Custom logo
-- Contributor list
-- Badges for role/feature coverage
