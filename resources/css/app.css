@@ -24,6 +24,11 @@
     box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2); /* Optional: shadow for depth */
 }
 
+.sidebar-link {
+    @apply flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition;
+}
+
+
 
 @keyframes waveBounce {
     0%, 100% {
