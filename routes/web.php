@@ -69,26 +69,18 @@ Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.'
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
 
+// 2FA Setup and Verification Routes
 Route::middleware('auth')->group(function () {
-    Route::get('2fa/setup', [TwoFactorController::class, 'show2FASetup'])->name('2fa.setup');
-    Route::post('2fa/verify', [TwoFactorController::class, 'verify2FA'])->name('verify2fa');
-});
+    // Show the 2FA setup form
+    Route::get('/2fa/setup', [TwoFactorController::class, 'show2FASetup'])->name('2fa.setup');
 
-// 2FA Verification (after login)
-Route::get('2fa/verify', function () {
-    return view('auth.2fa-verify'); // Make sure this view exists
-})->middleware('auth')->name('2fa.verify');
+    // Submit the code to verify and enable 2FA
+    Route::post('/2fa/verify', [TwoFactorController::class, 'verify2FACode'])->name('2fa.verify.code');
 
-Route::post('2fa/verify', [TwoFactorController::class, 'verify2FACode'])->middleware('auth')->name('2fa.verify.code');
-
-
-
-Route::middleware(['auth', '2fa', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
-    Route::get('/dashboard', [ProgramManagerController::class, 'index'])->name('dashboard');
-});
-
-Route::middleware(['auth', '2fa', 'role:care-support'])->prefix('care')->name('care.')->group(function () {
-    Route::get('/dashboard', [CareSupportController::class, 'index'])->name('dashboard');
+    // Show the 2FA prompt view (after login if 2FA is required)
+    Route::get('/2fa/verify', function () {
+        return view('auth.2fa-verify');
+    })->name('2fa.verify');
 });
 
 

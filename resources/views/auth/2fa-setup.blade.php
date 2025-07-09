@@ -1,29 +1,27 @@
-<!-- resources/views/auth/2fa-setup.blade.php -->
+<x-guest-layout>
+    <x-auth-card>
+        <h2 class="mb-4 text-lg font-bold text-center">Set up Two-Factor Authentication</h2>
 
-@extends('layouts.guest')
+        <p class="text-sm text-gray-600">Scan this QR code with your Google Authenticator app:</p>
 
-@section('content')
-    <div class="container">
-        <h2>2FA Setup</h2>
-        
-        <p>To set up Two-Factor Authentication (2FA), scan the QR code below with your Google Authenticator app:</p>
-
-        <!-- Display QR code -->
-        <div>
+        <div class="flex justify-center my-4">
             <img src="{{ $qrCode }}" alt="QR Code">
         </div>
 
-        <p>Or manually enter this secret key in your authenticator app:</p>
-        <p><strong>{{ session('2fa_secret') }}</strong></p>
+        <p class="text-sm text-gray-600">Or enter this code manually:</p>
+        <p class="mb-4 font-mono text-center text-blue-600">{{ session('2fa_secret') }}</p>
 
         <form method="POST" action="{{ route('verify2fa') }}">
             @csrf
-            <div class="form-group">
-                <label for="code">Enter the code from your authenticator app:</label>
-                <input type="text" id="code" name="code" class="form-control" required>
+            <div class="mb-4">
+                <x-label for="code" value="Enter the 6-digit code from your app" />
+                <x-input id="code" name="code" type="text" class="block w-full mt-1" required autofocus />
+                @error('code') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Verify</button>
+            <x-button class="w-full">
+                Verify and Enable 2FA
+            </x-button>
         </form>
-    </div>
-@endsection
+    </x-auth-card>
+</x-guest-layout>

@@ -10,7 +10,7 @@
                     <div class="logo-circle">ERP</div>
                 </a>
                 <a href="{{ url('/') }}">
-                    <span class="text-xl font-bold text-gray-800 dark:text-white">{{ env('APP_NAME') }}</span>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">{{ config('app.name') }}</span>
                 </a>
             </div>
 
