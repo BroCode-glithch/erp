@@ -16,12 +16,12 @@
 
     @stack('styles')
 </head>
-<body x-data="{ sidebarOpen: window.innerWidth >= 768 }" x-cloak class="h-full bg-gray-100 text-gray-800">
+<body x-data="{ sidebarOpen: window.innerWidth >= 768 }" x-cloak class="h-full text-gray-800 bg-gray-100">
 
     <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white transition-opacity duration-500">
-        <div class="text-5xl font-extrabold text-gray-700 animate-bounce space-x-1">
-            <span class="wave">E</span><span class="wave delay-100">R</span><span class="wave delay-200">P</span>
+    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500 bg-white">
+        <div class="space-x-1 text-5xl font-extrabold text-gray-700 animate-bounce">
+            <span class="wave">E</span><span class="delay-100 wave">R</span><span class="delay-200 wave">P</span><span class="delay-300 wave">.</span><span class="delay-400 wave">.</span><span class="delay-500 wave">.</span>
         </div>
     </div>
 
@@ -44,16 +44,16 @@
         @include('partials.admin._sidebar')
 
         <!-- Overlay for mobile -->
-        <div class="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden" x-show="sidebarOpen" @click="sidebarOpen = false" x-transition></div>
+        <div class="fixed inset-0 z-40 bg-black bg-opacity-40 md:hidden" x-show="sidebarOpen" @click="sidebarOpen = false" x-transition></div>
 
         <!-- Main content -->
-        <div class="flex-1 flex flex-col overflow-hidden relative z-10">
+        <div class="relative z-10 flex flex-col flex-1 overflow-hidden">
 
             <!-- Header -->
             @include('partials.admin._header')
 
             <!-- Page content -->
-            <main class="flex-1 overflow-y-auto p-6">
+            <main class="flex-1 p-6 overflow-y-auto">
                 @yield('content')
             </main>
 
