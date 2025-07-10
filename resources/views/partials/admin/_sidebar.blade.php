@@ -1,8 +1,10 @@
-<aside x-data="{ openMenu: null }"
-       x-show="sidebarOpen || window.innerWidth >= 768"
-       @click.away="sidebarOpen = false"
-       class="fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto text-gray-800 transition-transform duration-200 ease-in-out transform bg-white border-r border-gray-200 shadow-md dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 md:translate-x-0 md:static md:inset-0"
-       ::class="{ '-translate-x-full': !sidebarOpen && window.innerWidth < 768 }">
+<aside
+    x-data
+    x-show="sidebarOpen || window.innerWidth >= 768"
+    class="fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto bg-white border-r border-gray-200 shadow-md transition-transform duration-300 ease-in-out dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 md:static md:inset-0"
+    :class="sidebarOpen || window.innerWidth >= 768 ? 'translate-x-0' : '-translate-x-full'"
+    @click.outside="if(window.innerWidth < 768) sidebarOpen = false"
+>
 
     <div class="px-4 py-4 text-xl font-bold text-gray-800 border-b border-gray-200 dark:text-gray-100 dark:border-gray-700">
         <a href="{{ route('admin.dashboard') }}">

@@ -16,8 +16,21 @@
 
     @stack('styles')
 </head>
-<body x-data="{ sidebarOpen: window.innerWidth >= 768 }" x-cloak class="h-full text-gray-800 bg-gray-100">
-
+{{--  <body x-data="{ sidebarOpen: window.innerWidth >= 768 }" x-cloak class="h-full text-gray-800 bg-gray-100">  --}}
+<body
+    x-data="{
+        sidebarOpen: window.innerWidth >= 768,
+        updateSidebar() {
+            this.sidebarOpen = window.innerWidth >= 768;
+        }
+    }"
+    x-init="
+        updateSidebar();
+        window.addEventListener('resize', updateSidebar);
+    "
+    x-cloak
+    class="h-full text-gray-800 bg-gray-100"
+>
     <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500 bg-white">
         <div class="space-x-1 text-5xl font-extrabold text-gray-700 animate-bounce">

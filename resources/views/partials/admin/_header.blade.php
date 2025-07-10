@@ -5,13 +5,18 @@
             <!-- Left: Logo / Menu -->
             <div class="flex items-center space-x-4">
                 <!-- Mobile menu toggle -->
-                <button @click="$store.sidebarOpen = !$store.sidebarOpen" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white focus:outline-none">
+                {{--  <button @click="sidebarOpen = ! sidebarOpen" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
                          viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
                               d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
+                </button>  --}}
+                <!-- Mobile Hamburger -->
+                <button @click="sidebarOpen = !sidebarOpen" class="md:hidden p-2">
+                    @svg('heroicon-s-bars-3', 'w-6 h-6 text-gray-700 dark:text-gray-200')
                 </button>
+
 
                 <!-- Logo -->
                 <a href="{{ route('admin.dashboard') }}" class="text-xl font-semibold text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
