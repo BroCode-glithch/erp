@@ -53,8 +53,12 @@
                                    class="px-3 py-1 text-purple-500 border border-purple-500 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900">
                                     View
                                 </a>
-                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline-block"
-                                      onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <form
+                                        action="{{ route('admin.users.destroy', $user->id) }}"
+                                        method="POST"
+                                        class="inline-block delete-form"
+                                        onsubmit="event.preventDefault(); openDeleteModal(this);"
+                                    >
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

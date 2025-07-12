@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Departments;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DepartmentController extends Controller
 {
@@ -12,7 +14,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $departments = Departments::all();
+
+        return view('admin.departments.index', compact(var_name: 'departments'));
     }
 
     /**
@@ -20,7 +24,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.departments.create');
     }
 
     /**
@@ -28,7 +32,17 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'  => 'required|string|max:255',
+        ]);
+
+        Departments::create($request->only('name'));
+
+        // SweetAlert success message
+        Alert::success('Created', 'Department created  successfully.');
+
+        return redirect()->route('admin.departments.index');
+
     }
 
     /**
@@ -42,24 +56,40 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Departments $department)
     {
-        //
+        return view('admin.departments.edit', compact('department'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Departments $department)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255|string',
+        ]);
+
+        $department->update($request->only('name'));
+
+        // SweetAlert success message
+        Alert::success('Deleted', 'Department updated successfully.');
+
+        return redirect()->route('admin.departments.index');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Departments $department)
     {
-        //
+        $department->delete();
+
+        // SweetAlert success message
+        Alert::success('Deleted', 'Department deleted successfully.');
+
+        return redirect()->route('admin.departments.index');
     }
+
 }

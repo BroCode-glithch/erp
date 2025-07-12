@@ -2,12 +2,13 @@
 
 @section('content')
 <div class="p-6">
-    <h1 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Edit User</h1>
 
     <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="bg-white dark:bg-gray-800 p-6 rounded shadow-md">
         @csrf
         @method('PUT')
 
+        <h1 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Edit User</h1>
+        
         <!-- Name -->
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>

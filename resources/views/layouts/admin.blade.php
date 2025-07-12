@@ -15,6 +15,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @stack('styles')
+
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
 {{--  <body x-data="{ sidebarOpen: window.innerWidth >= 768 }" x-cloak class="h-full text-gray-800 bg-gray-100">  --}}
 <body
@@ -51,6 +55,9 @@
 
     @include('sweetalert::alert')
 
+    {{--  Delete MOdal  --}}
+    <x-confirm-modal />
+
     <div class="flex h-screen overflow-hidden">
 
         <!-- Sidebar -->
@@ -84,6 +91,15 @@
             setTimeout(() => preloader.style.display = 'none', 500);
         });
     </script>
+
+    <script>
+        function openDeleteModal(form) {
+            window.dispatchEvent(new CustomEvent('open-confirm-delete', {
+                detail: { form }
+            }));
+        }
+    </script>
+
 
     @stack('scripts')
 </body>
