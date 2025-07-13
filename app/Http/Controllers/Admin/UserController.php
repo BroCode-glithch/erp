@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class UserController extends Controller
@@ -16,7 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->get(); // Gets users with roles
+        $users = User::with('roles')
+            ->where('id', '!=', Auth::id())
+            ->get(); // show all users except admin
         return view('admin.users.index', compact('users'));
     }
 

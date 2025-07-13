@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Edit User(s) | Admin | ' . config('app.name'))
+
 @section('content')
 <div class="p-6">
 
@@ -8,7 +10,7 @@
         @method('PUT')
 
         <h1 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Edit User</h1>
-        
+
         <!-- Name -->
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>

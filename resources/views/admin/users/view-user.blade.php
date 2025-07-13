@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'View Users | Admin | ' . config('app.name'))
+
 @section('content')
 <div class="p-6">
     <div class="max-w-3xl mx-auto">

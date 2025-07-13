@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Edit Department | Admin | ' . config('app.name'))
+
 @section('content')
 <div class="px-4 py-6 sm:px-6 lg:px-8">
     <div class="max-w-xl p-6 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -9,7 +11,7 @@
             @method('PUT')
 
             <h2 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100">Edit Department</h2>
-            
+
             <div>
                 <label for="name" class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Department Name</label>
                 <input type="text" id="name" name="name" required

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard')
+@section('title', 'Dashboard | Admin | ' . config('app.name'))
 
 @section('content')
 <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -119,7 +119,7 @@
                     <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
                         Export XML
                     </a>
-                    
+
                     <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
                         Add Department
                     </a>
@@ -191,7 +191,7 @@
                     <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
                         Export XML
                     </a>
-                    
+
                     <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
                         Add User
                     </a>
@@ -266,7 +266,7 @@
                     <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
                         Export XML
                     </a>
-                    
+
                     <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
                         Create Program
                     </a>

@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Roles | Admin | ' . config('app.name'))
+
 @section('content')
 <div class="px-4 py-6 sm:px-6 lg:px-8">
     <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">

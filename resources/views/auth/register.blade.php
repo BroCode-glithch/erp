@@ -1,4 +1,5 @@
 <x-guest-layout>
+    
     @section('title', 'Register | ' . config('app.name'))
 
     <!-- Main Content Area -->

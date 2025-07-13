@@ -4,11 +4,14 @@
        class="fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto text-gray-800 transition-transform duration-200 ease-in-out transform bg-white border-r border-gray-200 shadow-md dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 md:translate-x-0 md:static md:inset-0"
        ::class="{ '-translate-x-full': !sidebarOpen && window.innerWidth < 768 }">
 
-    <div class="px-4 py-4 text-xl font-bold text-gray-800 border-b border-gray-200 dark:text-gray-100 dark:border-gray-700">
-        <a href="{{ route('admin.dashboard') }}">
-            <div class="logo-circle" style="width: 50px !important; height: 50px !important;">
-                ERP
-            </div>
+    <!-- Logo & App Name -->
+    <div class="px-4 py-4 flex items-center space-x-3">
+        <a href="{{ url('/') }}">
+            {{--  <x-application-logo class="block w-auto text-indigo-600 h-9 dark:text-indigo-400" />  --}}
+            <div class="logo-circle">ERP</div>
+        </a>
+        <a href="{{ url('/') }}">
+            <span class="text-xl font-bold text-gray-800 dark:text-white">{{ config('app.name') }}</span>
         </a>
     </div>
 
@@ -71,10 +74,12 @@
         <div>
             <button @click="openMenu === 'settings' ? openMenu = null : openMenu = 'settings'"
                     class="flex items-center justify-between w-full px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white focus:outline-none">
-                <div class="flex items-center gap-2">
-                    @svg('heroicon-s-cog-6-tooth', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-                    Settings
-                </div>
+                <a href="{{ route('admin.settings.index') }}">
+                    <div class="flex items-center gap-2">
+                        @svg('heroicon-s-cog-6-tooth', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
+                        Settings
+                    </div>
+                </a>
                 <svg :class="{'rotate-180': openMenu === 'settings'}"
                     class="w-4 h-4 text-gray-400 transition-transform duration-200 transform dark:text-gray-300"
                     fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -82,11 +87,11 @@
                 </svg>
             </button>
             <div x-show="openMenu === 'settings'" x-collapse class="mt-2 ml-4 space-y-1 text-sm">
-                <a href="{{ route('admin.settings.index') }}"
+                <a href="{{ route('admin.settings.general') }}"
                 class="block px-2 py-1 text-gray-600 rounded dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                     General
                 </a>
-                <a href="{{ route('admin.settings.index') }}"
+                <a href="{{ route('admin.settings.appearance') }}"
                 class="block px-2 py-1 text-gray-600 rounded dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                     Appearance
                 </a>

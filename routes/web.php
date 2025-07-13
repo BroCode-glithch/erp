@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CareSupportController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ProgramController;
-use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ProgramManagerController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -54,11 +54,16 @@ Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.'
 
     Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('notifications.read');
 
-    Route::post('/users/{user}/toggle-2fa', [SettingController::class, 'toggle2FA'])->name('users.toggle2fa');
+    Route::post('/users/{user}/toggle-2fa', [SettingsController::class, 'toggle2FA'])->name('users.toggle2fa');
+
 
     // Settings
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::get('/settings/general', action: [SettingsController::class, 'general'])->name('settings.general');
+    Route::put('/settings/general', [SettingsController::class, 'updateGeneral'])->name('settings.general.update');
+    Route::post('/settings', [SettingsController::class, 'store'])->name('settings.store');
+    Route::get('/settings/appearance', [SettingsController::class, 'appearance'])->name('settings.appearance');
+    Route::put('/settings/appearance', [SettingsController::class, 'updateAppearance'])->name('settings.appearance.update');
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Users | Admin | ' . config('app.name'))
+
 @section('content')
 <div class="px-4 py-6 sm:px-6 lg:px-8">
     <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -23,20 +25,26 @@
 
         <!-- Users Table -->
         <div class="overflow-x-auto">
+
+            <p class="px-4 py-2 text-sm text-center text-red-600 bg-red-50 dark:bg-gray-900 dark:text-red-400">
+                <strong>Note:</strong> This displays the users except for the admin.
+            </p>
+
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
-                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">ID</th>
+                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">#</th>
                         <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Name</th>
                         <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Email</th>
                         <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Roles</th>
                         <th class="px-6 py-3 text-xs font-medium text-right text-gray-500 uppercase dark:text-gray-300">Actions</th>
                     </tr>
                 </thead>
+
                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                     @forelse($users as $user)
                         <tr>
-                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $user->id }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $user->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $user->email }}</td>
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
@@ -69,15 +77,22 @@
                             </td>
                         </tr>
                     @empty
+
                         <tr>
                             <td colspan="5" class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
                                 No users found.
                             </td>
                         </tr>
+                        
                     @endforelse
                 </tbody>
+
             </table>
+
         </div>
+
     </div>
+
 </div>
+
 @endsection

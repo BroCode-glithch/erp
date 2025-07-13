@@ -1,20 +1,22 @@
 <x-guest-layout>
+
     @section('title', 'Login | ' . config('app.name'))
 
     <!-- Main Content Area -->
     <div class="relative flex items-center justify-center bg-white rounded-2xl">
 
-        <!-- Login Form Container with Animation -->
+        <!-- Login Form Container -->
         <div class="relative w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-2xl fade-in-pop-up">
 
-            <!-- Video Background Inside the Form Container -->
+            <!-- Video Background -->
             <video autoplay loop muted class="absolute inset-0 z-0 object-cover w-full rounded-2xl h-full">
                 <source src="{{ asset('videos/background-video.mp4') }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
 
-            <!-- Form Content (In Front of the Video) -->
+            <!-- Form Content -->
             <div class="relative z-20">
+                
                 <h2 class="feature-card text-2xl font-bold text-center text-white">LOGIN TO YOUR ACCOUNT...</h2>
 
                 <!-- Session Status -->
