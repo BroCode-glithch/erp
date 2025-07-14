@@ -3,20 +3,28 @@
 
         <!-- Left -->
         <div class="text-sm">
-            © {{ now()->year }} <a href="{{ config('app_url') }}"><span class="font-semibold">{{ config('app.name', 'ERP System') }}</span></a>. All rights reserved.
+            © {{ now()->year }} <a href="{{ config('app.url') }}"><span class="font-semibold">{{ config('app.name', 'ERP System') }}</span></a>. All rights reserved.
         </div>
 
         <!-- Center (Optional links) -->
         <div class="flex space-x-4 text-sm">
-            <a href="#" class="hover:text-blue-500 transition">Privacy Policy</a>
-            <a href="#" class="hover:text-blue-500 transition">Terms</a>
-            <a href="#" class="hover:text-blue-500 transition">Support</a>
+            <a href="#" class="hover:text-blue-500 transition">
+                {{ __('Privacy Policy') }}
+            </a>
+            <a href="#" class="hover:text-blue-500 transition">
+                {{ __('Terms') }}
+            </a>
+            <a href="#" class="hover:text-blue-500 transition">
+                {{ __('Support') }}
+            </a>
         </div>
 
         <!-- Right (Dark mode toggle) -->
         <div x-data="{ dark: false }" x-init="dark = localStorage.getItem('theme') === 'dark';"
              class="flex items-center space-x-2">
-            <span class="text-sm">Dark Mode</span>
+            <span class="text-sm">
+                {{ __('Dark Mode') }}
+            </span>
             <label class="inline-flex relative items-center cursor-pointer">
                 <input type="checkbox" x-model="dark" @change="document.documentElement.classList.toggle('dark', dark); localStorage.setItem('theme', dark ? 'dark' : 'light')"
                        class="sr-only peer">

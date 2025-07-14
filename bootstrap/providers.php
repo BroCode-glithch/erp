@@ -6,4 +6,5 @@ return [
     App\Providers\GdQrCodeProvider::class,
     App\Providers\JetstreamServiceProvider::class,
     App\Providers\QrCodeServiceProvider::class,
+    App\Providers\SettingsServiceProvider::class,
 ];

@@ -10,13 +10,13 @@
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
                     @svg('heroicon-s-bell', 'w-5 h-5 text-blue-500')
-                    Recent Notifications
+                    {{ __('Recent Notifications') }}
                 </h3>
                 <form action="{{ route('admin.notifications.read') }}" method="POST">
                     @csrf
                     <button type="submit"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        Mark all as read
+                       {{ __('Mark all as read')}}
                     </button>
                 </form>
             </div>
@@ -62,7 +62,7 @@
                     <!-- Manage Button -->
                     <a href="{{ $card['link'] }}"
                     class="text-sm font-medium text-{{ $card['color'] }}-600 dark:text-{{ $card['color'] }}-300 border border-transparent hover:border-{{ $card['color'] }}-300 hover:bg-{{ $card['color'] }}-50 dark:hover:bg-{{ $card['color'] }}-800 rounded-lg px-3 py-1.5 transition">
-                        Manage
+                        {{ __('Manage') }}
                     </a>
                 </div>
 
@@ -104,24 +104,26 @@
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <!-- Header with Title, Search, and Button -->
         <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Departments</h2>
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                {{ __('Departments') }}
+            </h2>
             <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
                 <input type="text" placeholder="Search by name, ID, or description..." class="w-full md:w-64 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <div class="flex flex-wrap gap-2">
                     <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
-                        Export PDF
+                        {{ __('Export PDF') }}
                     </a>
 
                     <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-sm">
-                        Export Excel
+                        {{ __('Export Excel') }}
                     </a>
 
                     <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
-                        Export XML
+                        {{ __('Export XML') }}
                     </a>
 
                     <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
-                        Add Department
+                        {{ __('Add Department') }}
                     </a>
                 </div>
             </div>
@@ -145,10 +147,10 @@
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Handles hiring, onboarding, and HR policies.</td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
                             <button class="px-3 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">
-                                Edit
+                                {{ __('Edit') }}
                             </button>
                             <button class="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
-                                Delete
+                                {{ __('Delete') }}
                             </button>
                         </td>
                     </tr>
@@ -158,10 +160,10 @@
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Responsible for infrastructure, support, and systems.</td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
                             <button class="px-3 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">
-                                Edit
+                                {{ __('Edit') }}
                             </button>
                             <button class="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
-                                Delete
+                                {{ (__('Delete')) }}
                             </button>
                         </td>
                     </tr>
@@ -176,24 +178,26 @@
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <!-- Header: Title, Search, and Button -->
         <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Users</h2>
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                {{ __('Users') }}
+            </h2>
             <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
                 <input type="text" placeholder="Search by name, email, or role..." class="w-full md:w-64 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <div class="flex flex-wrap gap-2">
                     <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
-                        Export PDF
+                        {{ __('Export PDF') }}
                     </a>
 
                     <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-sm">
-                        Export Excel
+                        {{ __('Export Excel') }}
                     </a>
 
                     <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
-                        Export XML
+                        {{ __('Export XML') }}
                     </a>
 
                     <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
-                        Add User
+                        {{ __('Add User') }}
                     </a>
                 </div>
             </div>
@@ -219,10 +223,10 @@
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">Admin</td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
                             <button class="px-3 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">
-                                Edit
+                                {{ __('Edit') }}
                             </button>
                             <button class="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
-                                Delete
+                                {{ __('Delete') }}
                             </button>
                         </td>
                     </tr>
@@ -233,10 +237,10 @@
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">Editor</td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
                             <button class="px-3 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">
-                                Edit
+                                {{ __('Edit') }}
                             </button>
                             <button class="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
-                                Delete
+                                {{ __('Delete') }}
                             </button>
                         </td>
                     </tr>
@@ -251,24 +255,26 @@
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <!-- Header: Title, Search, and Button -->
         <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Programs</h2>
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                {{ __('Programs') }}
+            </h2>
             <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
                 <input type="text" placeholder="Search programs..." class="w-full md:w-64 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <div class="flex flex-wrap gap-2">
                     <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
-                        Export PDF
+                        {{ __('Export PDF') }}
                     </a>
 
                     <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-sm">
-                        Export Excel
+                        {{ __('Export Excel') }}
                     </a>
 
                     <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm">
-                        Export XML
+                        {{ __('Export XML') }}
                     </a>
 
                     <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
-                        Create Program
+                        {{ __('Create Program') }}
                     </a>
                 </div>
             </div>

@@ -20,7 +20,7 @@
         <a href="{{ route('admin.dashboard') }}"
         class="flex items-center gap-2 px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             @svg('heroicon-s-home', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-            Dashboard
+            {{ __('Dashboard') }}
         </a>
 
         <!-- Roles & Permissions -->
@@ -29,7 +29,7 @@
                     class="flex items-center justify-between w-full px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white focus:outline-none">
                 <div class="flex items-center gap-2">
                     @svg('heroicon-s-shield-check', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-                    Roles & Permissions
+                    {{ __('Roles & Permissions') }}
                 </div>
                 <svg :class="{'rotate-180': openMenu === 'roles'}"
                     class="w-4 h-4 text-gray-400 transition-transform duration-200 transform dark:text-gray-300"
@@ -40,11 +40,11 @@
             <div x-show="openMenu === 'roles'" x-collapse class="mt-2 ml-4 space-y-1 text-sm">
                 <a href="{{ route('admin.roles.index') }}"
                 class="block px-2 py-1 text-gray-600 rounded dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                    All Roles
+                    {{ __('All Roles') }}
                 </a>
                 <a href="{{ route('admin.permissions.index') }}"
                 class="block px-2 py-1 text-gray-600 rounded dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                    Permissions
+                    {{ __('Permissions') }}
                 </a>
             </div>
         </div>
@@ -53,21 +53,21 @@
         <a href="{{ route('admin.users.index') }}"
         class="flex items-center gap-2 px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             @svg('heroicon-s-users', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-            User Management
+            {{ __('User Management') }}
         </a>
 
         <!-- Departments -->
         <a href="{{ route('admin.departments.index') }}"
         class="flex items-center gap-2 px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             @svg('heroicon-s-building-office', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-            Departments
+            {{ __('Departments') }}
         </a>
 
         <!-- Programs -->
         <a href="{{ route('admin.programs.index') }}"
         class="flex items-center gap-2 px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             @svg('heroicon-s-academic-cap', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-            Programs
+            {{ __('Departments') }}
         </a>
 
         <!-- Settings -->
@@ -77,7 +77,7 @@
                 <a href="{{ route('admin.settings.index') }}">
                     <div class="flex items-center gap-2">
                         @svg('heroicon-s-cog-6-tooth', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-                        Settings
+                        {{ __('Settings') }}
                     </div>
                 </a>
                 <svg :class="{'rotate-180': openMenu === 'settings'}"
@@ -89,11 +89,11 @@
             <div x-show="openMenu === 'settings'" x-collapse class="mt-2 ml-4 space-y-1 text-sm">
                 <a href="{{ route('admin.settings.general') }}"
                 class="block px-2 py-1 text-gray-600 rounded dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                    General
+                    {{ __('General') }}
                 </a>
                 <a href="{{ route('admin.settings.appearance') }}"
                 class="block px-2 py-1 text-gray-600 rounded dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                    Appearance
+                    {{ __('Appearance') }}
                 </a>
             </div>
         </div>
@@ -102,7 +102,7 @@
         <a href="{{ route('admin.reports.index') }}"
         class="flex items-center gap-2 px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             @svg('heroicon-s-chart-bar', 'w-5 h-5 shrink-0 text-gray-400 dark:text-gray-300')
-            Reports
+            {{ __('Reports') }}
         </a>
     </nav>
 
