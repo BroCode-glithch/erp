@@ -1,68 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $appearance['direction'] ?? 'ltr' }}" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program Manager Dashboard</title>
-    <!--  CSS or JS  -->
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
+    <title>
+        @yield('title', 'Program Manager Panel | ' . config('app.name'))
+    </title>
+
+    <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-100">
-    @if (session()->has('message'))
-        <div
-            x-data="{ show: true }"
-            x-init="setTimeout(() => show = false, 4000)"
-            x-show="show"
-            class="fixed bottom-6 right-6 z-50 px-6 py-4 bg-green-500 border border-green-700 text-white rounded-lg shadow-lg transition transform duration-500 ease-in-out"
-        >
-            <div class="font-semibold text-lg">
-                {{ session('message') }}
-            </div>
-        </div>
-    @endif
-    <!-- SweetAlert notifications -->
-    @include('sweetalert::alert')
 
+    <!-- Alpine.js -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <!-- CDN Chat.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    @stack('styles')
+
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+{{--  <body x-data="{ sidebarOpen: window.innerWidth >= 768 }" x-cloak class="h-full text-gray-800 bg-gray-100">  --}}
+<body
+    x-data="{
+        sidebarOpen: window.innerWidth >= 768,
+        updateSidebar() {
+            this.sidebarOpen = window.innerWidth >= 768;
+        }
+    }"
+    x-init="
+        updateSidebar();
+        window.addEventListener('resize', updateSidebar);
+    "
+    x-cloak
+    class="h-full text-gray-800 bg-gray-100"
+>
     <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
-        <div class="text-6xl font-bold text-gray-800 animate-wavy-text">
-            <span class="wave">E</span>
-            <span class="delay-100 wave">R</span>
-            <span class="delay-200 wave">P</span>
+    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500 bg-white">
+        <div class="space-x-1 text-5xl font-extrabold text-gray-700 animate-bounce">
+            <span class="wave">E</span><span class="delay-100 wave">R</span><span class="delay-200 wave">P</span><span class="delay-300 wave">.</span><span class="delay-400 wave">.</span><span class="delay-500 wave">.</span>
         </div>
     </div>
 
-    <!-- Include the header -->
-    @include('partials.pm._header')
-
-    <main>
-        <div class="flex mt-16">
-
-            <!-- Sidebar -->
-            <aside class="fixed top-0 left-0 hidden w-full h-screen text-white bg-gray-700 md:w-64 md:relative md:block">
-                @include('partials.pm._sidebar')
-            </aside>
-            <main class="flex-1 p-6">
-                <!-- Page content goes here -->
-                {{ $slot }}
-            </main>
+    <!-- Notification -->
+    @if (session()->has('message'))
+        <div x-data="{ show: true }"
+             x-init="setTimeout(() => show = false, 4000)"
+             x-show="show"
+             x-transition
+             class="fixed z-50 px-6 py-4 text-white bg-green-600 border border-green-700 rounded-lg shadow-lg bottom-6 right-6">
+            <div class="text-lg font-semibold">{{ session('message') }}</div>
         </div>
-    </main>
+    @endif
 
-    <!-- Include the footer -->
-    @include('partials.pm._footer')
+    @include('sweetalert::alert')
 
+    {{--  Delete MOdal  --}}
+    <x-confirm-modal />
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        @include('partials._sidebar')
+
+        <!-- Overlay for mobile -->
+        <div class="fixed inset-0 z-40 bg-black bg-opacity-40 md:hidden" x-show="sidebarOpen" @click="sidebarOpen = false" x-transition></div>
+
+        <!-- Main content -->
+        <div class="relative z-10 flex flex-col flex-1 overflow-hidden">
+
+            <!-- Header -->
+            @include('partials._header')
+
+            <!-- Page content -->
+            <main class="flex-1 p-6 overflow-y-auto">
+                @yield('content')
+            </main>
+
+            <!-- Footer -->
+            @include('partials._footer')
+
+        </div>
+    </div>
+
+    <!-- Preloader Script -->
     <script>
-        window.addEventListener('load', function () {
+        window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.classList.add('opacity-0');
             setTimeout(() => preloader.style.display = 'none', 500);
         });
     </script>
 
+    <script>
+        function openDeleteModal(form) {
+            window.dispatchEvent(new CustomEvent('open-confirm-delete', {
+                detail: { form }
+            }));
+        }
+    </script>
 
+
+    @stack('scripts')
 </body>
 </html>

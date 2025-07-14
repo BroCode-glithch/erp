@@ -1,4 +1,4 @@
-@extends('layouts.pm')
+@extends('layouts.admin')
 
 @section('content')
 <div class="px-4 py-6 sm:px-6 lg:px-8">
@@ -10,7 +10,7 @@
         </div>
 
         <!-- Form -->
-        <form action="{{ route('admin.programs.update', $program->id) }}" method="POST" class="p-6">
+        <form action="{{ route('pm.programs.update', $program->id) }}" method="POST" class="p-6">
             @csrf
             @method('PUT')
 

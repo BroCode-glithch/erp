@@ -1,4 +1,4 @@
-@extends('layouts.pm')
+@extends('layouts.admin')
 
 @section('title', 'Programs | Admin | ' . config('app.name'))
 

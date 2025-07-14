@@ -66,7 +66,7 @@ class AuthenticatedSessionController extends Controller
         } elseif ($user->hasRole('support')) {
             return redirect()->route('care.dashboard');
         } else {
-            return redirect()->route('user.dashboard');
+            return redirect()->back();
         }
     }
 

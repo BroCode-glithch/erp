@@ -64,7 +64,7 @@
     <div class="flex h-screen overflow-hidden">
 
         <!-- Sidebar -->
-        @include('partials.admin._sidebar')
+        @include('partials._sidebar')
 
         <!-- Overlay for mobile -->
         <div class="fixed inset-0 z-40 bg-black bg-opacity-40 md:hidden" x-show="sidebarOpen" @click="sidebarOpen = false" x-transition></div>
@@ -73,7 +73,7 @@
         <div class="relative z-10 flex flex-col flex-1 overflow-hidden">
 
             <!-- Header -->
-            @include('partials.admin._header')
+            @include('partials._header')
 
             <!-- Page content -->
             <main class="flex-1 p-6 overflow-y-auto">
@@ -81,7 +81,7 @@
             </main>
 
             <!-- Footer -->
-            @include('partials.admin._footer')
+            @include('partials._footer')
 
         </div>
     </div>

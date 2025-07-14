@@ -16,15 +16,15 @@
             x-data="{ show: true }"
             x-init="setTimeout(() => show = false, 4000)"
             x-show="show"
-            class="fixed bottom-6 right-6 z-50 px-6 py-4 bg-green-500 border border-green-700 text-white rounded-lg shadow-lg transition transform duration-500 ease-in-out"
+            class="fixed z-50 px-6 py-4 text-white transition duration-500 ease-in-out transform bg-green-500 border border-green-700 rounded-lg shadow-lg bottom-6 right-6"
         >
-            <div class="font-semibold text-lg">
+            <div class="text-lg font-semibold">
                 {{ session('message') }}
             </div>
         </div>
     @endif
     <!-- Include the header -->
-    @include('partials.care._header')
+    @include('partials._header')
 
     <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
@@ -42,9 +42,8 @@
             @include('sweetalert::alert')
 
             <!-- Sidebar -->
-            <aside class="fixed top-0 left-0 hidden w-full h-screen text-white bg-gray-700 md:w-64 md:relative md:block">
-                @include('partials.care._sidebar')
-            </aside>
+            @include('partials._sidebar')
+
             <main class="flex-1 p-6">
                 <!-- Page content goes here -->
                 {{ $slot }}
@@ -53,7 +52,7 @@
     </main>
 
     <!-- Include the footer -->
-    @include('partials.care._footer')
+    @include('partials._footer')
 
     <script>
         window.addEventListener('load', function () {

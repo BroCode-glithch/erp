@@ -5,13 +5,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\CareSupportController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Auth\TwoFactorController;
-use App\Http\Controllers\ProgramManagerController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Pm\PMDepartmentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\NotificationController;
 
@@ -69,9 +68,27 @@ Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.'
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
 
+Route::middleware(['auth', '2fa', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {
+    Route::get('/dashboard', fn () => view('pm.dashboard'))->name('dashboard');
 
-    // routes/web.php
-    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    // Programs
+    Route::resource('programs', ProgramController::class);
+
+    // Departments
+    Route::resource('departments', controller: PMDepartmentController::class);
+
+    // Reports
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+});
+
+
+Route::middleware(['auth', '2fa', 'role:support'])->prefix('care')->name('care.')->group(function () {
+    Route::get('/dashboard', fn () => view('care.dashboard'))->name('dashboard');
+});
+
+
+// routes/web.php
+Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
 
 // 2FA Setup and Verification Routes

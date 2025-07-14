@@ -37,12 +37,12 @@
             <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Manage Departments</h2>
 
             <!-- Search + Actions -->
-            <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-3 w-full md:w-auto">
+            <div class="flex flex-col w-full gap-2 md:flex-row md:items-center md:gap-3 md:w-auto">
                 <!-- Search Input -->
                 <input
                     type="text"
                     placeholder="Search departments..."
-                    class="w-full px-3 py-2 text-sm border rounded-md md:w-64 text-gray-800 bg-white border-gray-300 placeholder-gray-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full px-3 py-2 text-sm text-gray-800 placeholder-gray-400 bg-white border border-gray-300 rounded-md md:w-64 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
                 <!-- Export Buttons -->
@@ -59,10 +59,10 @@
                     class="px-3 py-2 text-sm font-medium text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
                     Export XML
                     </a>
-                    <a href="{{ route('admin.departments.create') }}"
-                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
-                    + New Department
-                    </a>
+                        <a href="{{ route('admin.departments.create') }}"
+                            class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                            + New Department
+                        </a>
                 </div>
             </div>
         </div>
