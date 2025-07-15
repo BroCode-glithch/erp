@@ -76,12 +76,12 @@ class SettingsController extends Controller
             'general.maintenance_mode' => $request->boolean('maintenance_mode'),
         ]);
 
+
         // Flash success message
-        Session::flash('status', 'General settings updated successfully.');
+        Session::flash('message', 'General settings updated successfully.');
 
         // Redirect back to the settings page
-        return back()
-            ;
+        return back();
     }
 
     public function appearance()

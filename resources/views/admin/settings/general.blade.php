@@ -6,12 +6,6 @@
 <div class="px-4 py-6 sm:px-6 lg:px-8 max-w-4xl mx-auto">
     <h2 class="mb-6 text-2xl font-semibold text-gray-800 dark:text-gray-100">General Settings</h2>
 
-    @if(session('status'))
-        <div class="p-4 mb-6 text-sm text-green-800 bg-green-100 border border-green-200 rounded dark:bg-green-900 dark:text-green-100 dark:border-green-700">
-            {{ session('status') }}
-        </div>
-    @endif
-
     <form action="{{ route('admin.settings.general.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
         @method('PUT')
