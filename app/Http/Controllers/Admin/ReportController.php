@@ -9,6 +9,7 @@ class ReportController extends Controller
 {
     public function index() 
     {
+        // Return the view for the reports index page
         return view('admin.reports.index');
     }
 }

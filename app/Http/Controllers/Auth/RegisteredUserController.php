@@ -21,6 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+        // Return the registration view
         return view('auth.register');
     }
 
@@ -32,6 +33,7 @@ class RegisteredUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        // Validate the request data
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
@@ -40,88 +42,58 @@ class RegisteredUserController extends Controller
             'enable_2fa' => ['nullable', 'in:0,1'],
         ]);
 
+        // Create the user
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // Assign role based on the provided role in the request
         if (Role::where('name', $request->role)->exists()) {
             $user->assignRole($request->role);
         }
 
+        // Fire the Registered event
+        event(new Registered($user)); 
+
+        // Log in the user
         Auth::login($user);
 
+        // If 2FA is enabled, redirect to the 2FA setup page
         if ($request->input('enable_2fa') === '1') {
+            // Redirect to the 2FA setup page
             return redirect()->route('2fa.setup');
         }
 
+        // Flash a success message
+        session()->flash('message', 'Registration successful! Welcome, ' . $user->name . '!');
+
+        // Redirect to the appropriate dashboard based on the user's role
         return $this->redirectToRoleDashboard($user);
     }
 
     protected function redirectToRoleDashboard($user)
     {
+        // Redirect based on the user's role
         if ($user->hasRole('admin')) {
+
+            // Redirect to admin dashboard
             return redirect()->route('admin.dashboard');
+
         } elseif ($user->hasRole('program-manager')) {
+
+            // Redirect to program manager dashboard
             return redirect()->route('program-manager.dashboard');
+
         } elseif ($user->hasRole('care-support')) {
+
+            // Redirect to care support dashboard
             return redirect()->route('care-support.dashboard');
+
         }
 
+        // Default redirect if no specific role matches
         return redirect()->route('dashboard');
     }
-
-    // public function store(Request $request): RedirectResponse
-    // {
-    //     // Validate input
-    //     $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-    //         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    //         'role' => ['required', 'string', 'in:admin,program-manager,care-support'], // Allow only specific roles
-    //     ]);
-
-    //     // Create user
-    //     $user = User::create([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //     ]);
-
-    //     // Assign role based on the provided role in the request
-    //     $role = $request->role;
-
-    //     // Ensure the role exists before assigning
-    //     if (Role::where('name', $role)->exists()) {
-    //         $user->assignRole($role);
-    //     } else {
-    //         // If role doesn't exist, show error alert
-    //         Alert::error('Invalid Role', 'The selected role does not exist. Please try again.');
-    //         return redirect()->route('register');
-    //     }
-
-    //     // Fire the Registered event
-    //     event(new Registered($user));
-
-    //     // Login the user
-    //     Auth::login($user);
-
-    //     $user = $request->user();
-    //     $message = $user->name . ', account registered! You have successfully logged in.';
-
-    //     // 🔥 Flash for Livewire or Blade-based alerts
-    //     session()->flash('message', $message);
-
-    //     // Redirect based on the role and show success message
-    //     if ($user->hasRole('admin')) {
-    //         return redirect()->route('admin.dashboard'); // Redirect to admin dashboard
-    //     } elseif ($user->hasRole('program-manager')) {
-    //         return redirect()->route('program-manager.dashboard'); // Redirect to program manager dashboard
-    //     } elseif ($user->hasRole('care-support')) {
-    //         return redirect()->route('care-support.dashboard'); // Redirect to care support dashboard
-    //     } else {
-    //         return redirect()->route('dashboard'); // Default dashboard
-    //     }
-    // }
 }

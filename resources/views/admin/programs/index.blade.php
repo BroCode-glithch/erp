@@ -1,4 +1,4 @@
-@extends('layouts.pm')
+@extends('layouts.admin')
 
 @section('title', 'Programs | Admin | ' . config('app.name'))
 
@@ -42,7 +42,7 @@
                     <a href="#" class="px-3 py-2 text-sm text-white bg-red-600 rounded-md hover:bg-red-700">Export PDF</a>
                     <a href="#" class="px-3 py-2 text-sm text-white bg-green-600 rounded-md hover:bg-green-700">Export Excel</a>
                     <a href="#" class="px-3 py-2 text-sm text-white bg-yellow-500 rounded-md hover:bg-yellow-600">Export XML</a>
-                    <a href="{{ route('pm.programs.create') }}" class="px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                    <a href="{{ route('admin.programs.create') }}" class="px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700">
                         + Add Program
                     </a>
                 </div>
@@ -65,7 +65,7 @@
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $index + 1 }}</td>
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $program->name }}</td>
                             <td class="px-6 py-4 space-x-2 text-sm text-right">
-                                <a href="{{ route('pm.programs.edit', $program->id) }}" class="px-3 py-1 text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">Edit</a>
+                                <a href="{{ route('admin.programs.edit', $program->id) }}" class="px-3 py-1 text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">Edit</a>
                                     <button
                                         @click="showModal = true; deleteUrl = '{{ route('admin.programs.destroy', $program->id) }}'"
                                         class="px-3 py-1 text-red-500 border border-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">

@@ -80,8 +80,7 @@
             </a>
         @endif
 
-        <!-- Program Manager only -->
-        @role('program-manager')
+        <!--Admin + Program Manager -->
             @if(auth()->user()->hasRole('admin'))
                 <a href="{{ route('admin.programs.index') }}"
                 class="flex items-center gap-2 px-3 py-2 font-medium text-gray-700 rounded dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
@@ -95,7 +94,6 @@
                     {{ __('Programs') }}
                 </a>
             @endif
-        @endrole
 
         <!-- Settings (admin only) -->
         @role('admin')

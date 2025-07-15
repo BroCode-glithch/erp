@@ -10,6 +10,7 @@ class QrCodeServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // Bind the IQRCodeProvider interface to the GdQrCodeGenerator implementation
         $this->app->bind(IQRCodeProvider::class, GdQrCodeGenerator::class);
     }
 

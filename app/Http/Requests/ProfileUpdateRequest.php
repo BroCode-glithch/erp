@@ -15,6 +15,7 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Define validation rules for profile update
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => [

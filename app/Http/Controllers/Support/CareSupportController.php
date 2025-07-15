@@ -8,6 +8,7 @@ class CareSupportController extends Controller
 {
     public function index()
     {
+        // Displays the care support dashboard
         return view("care.dashboard");
     }
 }

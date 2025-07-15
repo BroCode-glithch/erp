@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Programs extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'programs';
     protected $fillable = [
         'name',
     ];

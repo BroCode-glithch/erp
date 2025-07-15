@@ -19,3 +19,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    function openDeleteModal(form) {
+        window.dispatchEvent(new CustomEvent('open-confirm-delete', {
+            detail: { form }
+        }));
+    }
+</script>

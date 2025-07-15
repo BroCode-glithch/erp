@@ -30,13 +30,6 @@
 
     <div class="flex flex-col items-center justify-center min-h-screen px-6 py-12 mt-8">
 
-        <!-- Theme Toggle -->
-        <div class="self-end mb-6">
-            <button @click="darkMode = !darkMode" class="px-4 py-2 text-sm font-semibold border rounded-lg shadow hover:bg-gray-200 dark:hover:bg-gray-800">
-                Toggle <span x-text="darkMode ? 'Light' : 'Dark'"></span> Mode
-            </button>
-        </div>
-
         <!-- Hero Section -->
         <div class="max-w-4xl text-center animate-fade-in-up">
             <h1 class="mb-4 text-5xl font-extrabold leading-tight text-indigo-600 dark:text-indigo-400">

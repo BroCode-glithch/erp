@@ -22,6 +22,7 @@
     <style>
         [x-cloak] { display: none !important; }
     </style>
+
 </head>
 {{--  <body x-data="{ sidebarOpen: window.innerWidth >= 768 }" x-cloak class="h-full text-gray-800 bg-gray-100">  --}}
 <body
@@ -38,12 +39,9 @@
     x-cloak
     class="h-full text-gray-800 bg-gray-100"
 >
+
     <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500 bg-white">
-        <div class="space-x-1 text-5xl font-extrabold text-gray-700 animate-bounce">
-            <span class="wave">E</span><span class="delay-100 wave">R</span><span class="delay-200 wave">P</span><span class="delay-300 wave">.</span><span class="delay-400 wave">.</span><span class="delay-500 wave">.</span>
-        </div>
-    </div>
+    <x-preloader />
 
     <!-- Notification -->
     @if (session()->has('message'))
@@ -58,7 +56,7 @@
 
     @include('sweetalert::alert')
 
-    {{--  Delete MOdal  --}}
+    <!-- Confirm Delete Modal -->
     <x-confirm-modal />
 
     <div class="flex h-screen overflow-hidden">
@@ -80,30 +78,16 @@
                 @yield('content')
             </main>
 
+            <!-- Flash Notification -->
+            <x-notification />
+
             <!-- Footer -->
             @include('partials._footer')
 
         </div>
     </div>
 
-    <!-- Preloader Script -->
-    <script>
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.classList.add('opacity-0');
-            setTimeout(() => preloader.style.display = 'none', 500);
-        });
-    </script>
-
-    <script>
-        function openDeleteModal(form) {
-            window.dispatchEvent(new CustomEvent('open-confirm-delete', {
-                detail: { form }
-            }));
-        }
-    </script>
-
-
     @stack('scripts')
+
 </body>
 </html>

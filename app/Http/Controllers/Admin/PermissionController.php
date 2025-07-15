@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
@@ -13,7 +14,11 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        // Fetch all permissions from the db
         $permissions = Permission::all();
+
+        // Return the view with permissions data
+        // Using compact to pass the variable to the view
         return view('admin.permissions.index', compact('permissions'));
     }
 
@@ -22,6 +27,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        // Return the view for creating a new permission
         return view('admin.permissions.create');
     }
 
@@ -30,13 +36,19 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the request data
         $request->validate([
             'name' => 'required|unique:permissions,name|string|max:255',
         ]);
 
+        // Create a new permission
         Permission::create(['name' => $request->name]);
 
-        return redirect()->route('admin.permissions.index')->with('success', 'Permission created successfully.');
+        // Flash a success message
+        Session::flash('message', 'Permission created successfully.');
+
+        // Return redirect route to index
+        return redirect()->route('admin.permissions.index');
     }
 
     /**
@@ -44,7 +56,10 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
+        // Find the permission by ID and return the edit view
         $permission = Permission::findOrFail($id);
+
+        // Return the view for editing the permission
         return view('admin.permissions.edit', compact('permission'));
     }
 
@@ -53,15 +68,22 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Find the permission by ID
         $permission = Permission::findOrFail($id);
 
+        // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255|unique:permissions,name,' . $permission->id,
         ]);
 
+        // Update the permission
         $permission->update(['name' => $request->name]);
 
-        return redirect()->route('admin.permissions.index')->with('success', 'Permission updated successfully.');
+        // Flash a success message
+        Session::flash('message', 'Permission updated successfully.');
+
+        // Return redirect route to index
+        return redirect()->route('admin.permissions.index');
     }
 
     /**
@@ -69,9 +91,14 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
+        // Find the permission by ID and delete it
         $permission = Permission::findOrFail($id);
         $permission->delete();
 
-        return redirect()->route('admin.permissions.index')->with('success', 'Permission deleted successfully.');
+        // Flash a success message
+        Session::flash('message', 'Permission deleted successfully.');
+
+        // Return redirect route to index
+        return redirect()->route('admin.permissions.index');
     }
 }

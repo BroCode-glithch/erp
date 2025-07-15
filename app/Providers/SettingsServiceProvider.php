@@ -21,6 +21,7 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Load settings from the database or configuration
         $appearance = [
             'direction' => setting('appearance.direction', 'ltr'),
             'language'  => setting('appearance.language', 'en'),

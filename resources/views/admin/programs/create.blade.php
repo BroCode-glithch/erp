@@ -1,4 +1,4 @@
-@extends('layouts.pm')
+@extends('layouts.admin')
 
 @section('content')
     <div class="px-4 py-6 sm:px-6 lg:px-8">
@@ -10,7 +10,7 @@
             </div>
 
             <!-- Form -->
-            <form action="{{ route('pm.programs.store') }}" method="POST" class="p-6">
+            <form action="{{ route('admin.programs.store') }}" method="POST" class="p-6">
                 @csrf
 
                 <!-- Program Name -->
@@ -30,7 +30,7 @@
 
                 <!-- Actions -->
                 <div class="flex justify-end mt-6 space-x-2">
-                    <a href="{{ route('pm.programs.index') }}"
+                    <a href="{{ route('admin.programs.index') }}"
                         class="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-md dark:border-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                         Cancel
                     </a>

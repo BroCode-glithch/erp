@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -17,9 +18,17 @@ class UserController extends Controller
      */
     public function index()
     {
+        // Ensure the user is authorized to view this page
+        if (!Auth::user()->can('view users')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Fetch users with roles, excluding the currently authenticated user
         $users = User::with('roles')
             ->where('id', '!=', Auth::id())
             ->get(); // show all users except admin
+
+        // Return the view with the users data
         return view('admin.users.index', compact('users'));
     }
 
@@ -44,8 +53,19 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+        // Ensure the user is authorized to view this page
+        if (!Auth::user()->can('view users')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Fetch the user with roles
+        if (!User::where('id', $id)->exists()) {
+            abort(404, 'User not found.');
+        }
+
         $user = User::with('roles')->findOrFail($id);
 
+        // Return the view with the user data
         return view('admin.users.view-user', compact('user'));
     }
 
@@ -54,8 +74,21 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        // Ensure the user is authorized to edit this page
+        if (!Auth::user()->can('edit users')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Check if the user exists
+        if (!User::where('id', $id)->exists()) {
+            abort(404, 'User not found.');
+        }
+
+        // Fetch the user with roles
         $user = User::findOrFail($id);
         $roles = Role::all();
+
+        // Return the view with the user and roles data
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
@@ -65,8 +98,20 @@ class UserController extends Controller
     */
     public function update(Request $request, string $id)
     {
+        // Ensure the user is authorized to update this page
+        if (!Auth::user()->can('edit users')) { 
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Check if the user exists
+        if (!User::where('id', $id)->exists()) {
+            abort(404, 'User not found.');
+        }
+
+        // Fetch the user
         $user = User::findOrFail($id);
 
+        // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -74,13 +119,28 @@ class UserController extends Controller
             'roles' => 'nullable|array'
         ]);
 
+
         $user->name = $request->name;
         $user->email = $request->email;
 
+        // Only update the password if it is provided
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
 
+        // If the user is not an admin, ensure they cannot assign admin roles
+        if (!Auth::user()->hasRole('admin') && $request->has('roles') && in_array('admin', $request->roles)) {
+
+            // Flash an error message
+            Session::flash('error', 'You do not have permission to assign admin roles.');
+
+
+            // Redirect back
+            return redirect()->back()
+                ;
+        }
+
+        // Save the user
         $user->save();
 
         // Convert role IDs to names
@@ -89,7 +149,11 @@ class UserController extends Controller
         // Sync by name
         $user->syncRoles($roleNames);
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        // Flash a success message
+        Session::flash('success', 'User updated successfully.');
+
+        // Redirect to the users index
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -97,10 +161,25 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        // Ensure the user is authorized to delete this page
+        if (!Auth::user()->can('delete users')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Check if the user exists
+        if (!User::where('id', $id)->exists()) {
+            abort(404, 'User not found.');
+        }
+
+        // Fetch the user and delete
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'User deleted.');
+        // Flash a success message
+        Session::flash('success', 'User deleted successfully.');
+
+        // Redirect to the users index
+        return redirect()->route('admin.users.index');
     }
 
 }

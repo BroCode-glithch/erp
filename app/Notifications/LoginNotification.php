@@ -3,14 +3,20 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+// use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class LoginNotification extends Notification
 {
+
     use Queueable;
 
+    /**
+     * The location of the login.
+     *
+     * @var string
+     */
     public $location;
 
     /**
@@ -37,6 +43,7 @@ class LoginNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        // Customize the email message
         return (new MailMessage)
             ->subject('⚠️ New Login Detected!!!')
             ->greeting('Hello ' . $notifiable->name . ',')
@@ -48,6 +55,7 @@ class LoginNotification extends Notification
 
     public function toDatabase($notifiable)
     {
+        // Store the login location in the database
         return [
             'message' => "New login detected: " . $this->location,
         ];
@@ -60,6 +68,7 @@ class LoginNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        
         return [
             //
         ];

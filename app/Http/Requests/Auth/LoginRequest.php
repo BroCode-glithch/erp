@@ -16,6 +16,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // Allow all users to make this request
         return true;
     }
 
@@ -26,6 +27,8 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Defined validation rules for login
+        // Ensured email is required, string, and valid email format
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
@@ -39,8 +42,17 @@ class LoginRequest extends FormRequest
      */
     public function authenticate(): void
     {
+        // Ensure the login request is not rate limited
+        // This will prevent brute force attacks by limiting the number of login attempts
+        // to 5 attempts per minute
+        // If the limit is exceeded, it will throw a ValidationException with a throttle message
+        // and trigger a Lockout event
         $this->ensureIsNotRateLimited();
 
+        // Attempt to authenticate the user with the provided credentials
+        // If authentication fails, it will throw a ValidationException with an error message
+        // If successful, it will clear the rate limiter for this throttle key
+        // and allow the request to proceed
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
@@ -49,6 +61,8 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+
+        // Clear the rate limiter for this throttle key
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -59,6 +73,10 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
+        // Check if the rate limit has been exceeded
+        // If it has, throw a ValidationException with a throttle message
+        // and trigger a Lockout event
+        // This will prevent further login attempts until the rate limit resets
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
@@ -80,6 +98,12 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
+        // Generate a unique throttle key based on the user's email and IP address
+        // This ensures that the rate limit is applied per user and IP address
+        // It also helps to prevent abuse from the same user or IP address
+        if ($this->user()) {
+            return Str::transliterate(Str::lower($this->user()->email).'|'.$$this->ip());
+        }
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
     }
 }

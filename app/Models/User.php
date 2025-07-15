@@ -11,6 +11,13 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+    
     use HasApiTokens;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */

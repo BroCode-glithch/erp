@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Programs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Session;
 
 class ProgramController extends Controller
 {
@@ -14,7 +14,11 @@ class ProgramController extends Controller
      */
     public function index()
     {
+        // Fetch all programs from the db
         $programs = Programs::all();
+
+        // Return the view with programs data
+        // Using compact to pass the variable to the view
         return view('admin.programs.index', compact('programs'));
     }
 
@@ -23,6 +27,7 @@ class ProgramController extends Controller
      */
     public function create()
     {
+        // Return the view for creating a new program
         return view('admin.programs.create');
     }
 
@@ -31,17 +36,20 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
+        // Create a new program with the validated data
         Programs::create(
             $request->only('name')
         );
 
-        // SweetAlert success message
-        Alert::success('Created', 'Department created  successfully.');
+        // Flash a success message
+        Session::flash('message', 'Program created successfully.');
 
+        // Redirect to the index route after creation
         return redirect()->route('admin.programs.index');
     }
 
@@ -58,6 +66,8 @@ class ProgramController extends Controller
      */
     public function edit(Programs $program)
     {
+        // Return the view for editing the specified program
+        // Using compact to pass the variable to the view
         return view('admin.programs.edit', compact(var_name: 'program'));
     }
 
@@ -66,15 +76,18 @@ class ProgramController extends Controller
      */
     public function update(Request $request, Programs $program)
     {
+        // Validate the request data
         $request->validate([
             'name' => 'required|max:255|string',
         ]);
 
+        // Update the program with the validated data
         $program->update($request->only('name'));
 
-        // SweetAlert success message
-        Alert::success('UPdated', text: 'Program updated successfully.');
+        // Flash success message
+        Session::flash('message', 'Program updated successfully.');
 
+        // Redirect to the index route after updating
         return redirect()->route('admin.programs.index');
 
     }
@@ -84,11 +97,13 @@ class ProgramController extends Controller
      */
     public function destroy(Programs $program)
     {
+        // Delete the specified program
         $program->delete();
 
-        // SweetAlert success message
-        Alert::success('Deleted', 'Department created  successfully.');
+        // Flash a success message
+        Session::flash('message', 'Program deleted successfully.');
 
+        // Redirect to the index route after deletion
         return redirect()->route('admin.programs.index');
     }
 }

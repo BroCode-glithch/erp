@@ -41,7 +41,8 @@
                     Features
                 </a>
 
-                <button id="theme-toggle" class="p-2">
+                <!-- Theme Toggle -->
+                <button @click="darkMode = !darkMode" class="p-2">
                     <x-heroicon-o-sun id="theme-toggle-light" class="hidden size-5 text-yellow-500" />
                     <x-heroicon-o-moon id="theme-toggle-dark" class="size-5 text-gray-900 dark:text-gray-800" />
                 </button>
@@ -87,6 +88,12 @@
                     </a>
                 @endif
             @endguest
+
+            <!-- Theme Toggle -->
+            <button @click="darkMode = !darkMode" class="p-2">
+                <x-heroicon-o-sun id="theme-toggle-light" class="hidden size-5 text-yellow-500" />
+                <x-heroicon-o-moon id="theme-toggle-dark" class="size-5 text-gray-900 dark:text-gray-800" />
+            </button>
 
             @auth
             @php

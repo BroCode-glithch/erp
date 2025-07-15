@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Set default string length for database columns to avoid issues with older MySQL versions
         Schema::defaultStringLength(191);  // Set default string length to 191
         // DB::statement("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
     }

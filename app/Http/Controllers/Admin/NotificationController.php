@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class NotificationController extends Controller
 {
@@ -17,13 +17,14 @@ class NotificationController extends Controller
             // Mark all unread notifications as read
             $unreadNotifications->markAsRead();
 
-            // 🔥 Flash for Livewire or Blade-based alerts
-            session()->flash('message', 'All notifications marked as read.');
+            // Flash a success message if there is at least one unread notification
+            Session::flash('message', 'All notifications marked as read.');
 
             return back(); // Redirect back after marking notifications as read
         } else {
-            // 🔥 Flash for Livewire or Blade-based alerts
-            session()->flash('message', 'Nothing to mark as read.');
+
+            // Flash a message if there are no unread notifications
+            Session::flash('message', 'Nothing to mark as read.');
 
             return back(); // Redirect back after attempting to mark notifications as read
         }
@@ -31,13 +32,15 @@ class NotificationController extends Controller
 
     public function markAsRead($notificationId)
     {
+        // Find the specific notification by ID
         $notification = Auth::user()->notifications()->findOrFail($notificationId);
         
         // Mark a single notification as read
         $notification->markAsRead();
 
-        // 🔥 Flash for Livewire or Blade-based alerts
-        session()->flash('message', 'Notification marked as read.');
+
+        // Flash a success message for marking a single notification as read
+        Session::flash('message', 'Notification marked as read.');
 
         return back(); // Redirect back after marking notification as read
     }
