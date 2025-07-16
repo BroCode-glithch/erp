@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Mail\WelcomeUserMail;
+use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
-use Spatie\Permission\Models\Role;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
@@ -55,7 +56,7 @@ class RegisteredUserController extends Controller
         }
 
         // Fire the Registered event
-        event(new Registered($user)); 
+        event(new Registered($user));
 
         // Log in the user
         Auth::login($user);
@@ -65,6 +66,9 @@ class RegisteredUserController extends Controller
             // Redirect to the 2FA setup page
             return redirect()->route('2fa.setup');
         }
+
+        // After login
+        Mail::to($user->email)->send(new WelcomeUserMail($user));
 
         // Flash a success message
         session()->flash('message', 'Registration successful! Welcome, ' . $user->name . '!');
@@ -84,12 +88,12 @@ class RegisteredUserController extends Controller
         } elseif ($user->hasRole('program-manager')) {
 
             // Redirect to program manager dashboard
-            return redirect()->route('program-manager.dashboard');
+            return redirect()->route('pm.dashboard');
 
         } elseif ($user->hasRole('care-support')) {
 
             // Redirect to care support dashboard
-            return redirect()->route('care-support.dashboard');
+            return redirect()->route('care.dashboard');
 
         }
 

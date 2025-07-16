@@ -12,13 +12,13 @@
                 <!-- Dynamic Logo Title -->
                 <a href="#" class="text-xl font-semibold text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                     @if (Auth::user()->hasRole('admin'))
-                        {{ __('ERP Admin') }}
+                        {{ setting('general.site_name') . __(' Admin') }}
                     @elseif (Auth::user()->hasRole('support'))
-                        {{ __('ERP Support') }}
+                        {{ setting('general.site_name') . __(' Support') }}
                     @elseif (Auth::user()->hasRole('program-manager'))
-                        {{ __('ERP Program Manager') }}
+                        {{ setting('general.site_name') . __(' Program Manager') }}
                     @else
-                        {{ __('ERP') }}
+                        {{ setting('general.site_name') }}
                     @endif
                 </a>
             </div>

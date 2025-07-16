@@ -1,6 +1,6 @@
 <x-guest-layout>
 
-    @section('title', 'Login | ' . config('app.name'))
+    @section('title', 'Login | ' . setting('general.site_name'))
 
     <!-- Main Content Area -->
     <div class="relative flex items-center justify-center bg-white rounded-2xl">
@@ -16,7 +16,7 @@
 
             <!-- Form Content -->
             <div class="relative z-20">
-                
+
                 <h2 class="feature-card text-2xl font-bold text-center text-white">LOGIN TO YOUR ACCOUNT...</h2>
 
                 <!-- Session Status -->
@@ -28,21 +28,26 @@
                     <!-- Email Address -->
                     <div class="feature-card">
                         <x-input-label for="email" :value="__('Email')" style="color: #fff !important" />
-                        <x-text-input id="email" placeholder="username@erp.com" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                        <x-text-input id="email" placeholder="username@erp.com" class="block w-full mt-1"
+                            type="email" name="email" :value="old('email')" required autofocus
+                            autocomplete="username" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
                     <!-- Password -->
                     <div class="feature-card">
                         <x-input-label for="password" :value="__('Password')" style="color: #fff !important" />
-                        <x-text-input id="password" placeholder="**********" class="block w-full mt-1" type="password" name="password" required autocomplete="current-password" />
+                        <x-text-input id="password" placeholder="**********" class="block w-full mt-1" type="password"
+                            name="password" required autocomplete="current-password" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
                     <!-- Remember Me -->
                     <div class="flex items-center justify-between">
                         <label for="remember_me" class="inline-flex items-center">
-                            <input id="remember_me" type="checkbox" class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500" name="remember">
+                            <input id="remember_me" type="checkbox"
+                                class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500"
+                                name="remember">
                             <span class="text-sm text-gray-300 ms-2">{{ __('Remember me') }}</span>
                         </label>
 

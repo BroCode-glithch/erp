@@ -73,24 +73,15 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        // Check if the rate limit has been exceeded
-        // If it has, throw a ValidationException with a throttle message
+
+        // Check if the rate limit for this throttle key has been exceeded
+        // If it has, it will throw a ValidationException with a throttle message
         // and trigger a Lockout event
         // This will prevent further login attempts until the rate limit resets
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
-        event(new Lockout($this));
-
-        $seconds = RateLimiter::availableIn($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
     }
 
     /**
@@ -99,11 +90,8 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         // Generate a unique throttle key based on the user's email and IP address
-        // This ensures that the rate limit is applied per user and IP address
-        // It also helps to prevent abuse from the same user or IP address
-        if ($this->user()) {
-            return Str::transliterate(Str::lower($this->user()->email).'|'.$$this->ip());
-        }
+        // This key will be used to track the rate limit for this specific user
+        // It combines the email and IP address to ensure uniqueness
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
     }
 }

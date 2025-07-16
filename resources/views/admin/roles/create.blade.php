@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Create Roles | Admin | ' . config('app.name'))
+@section('title', 'Create Roles | Admin | ' . setting('general.site_name')))
 
 @section('content')
 <div class="px-4 py-6 sm:px-6 lg:px-8">

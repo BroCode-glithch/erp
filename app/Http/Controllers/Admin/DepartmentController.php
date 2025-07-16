@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Departments;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
@@ -12,10 +13,25 @@ class DepartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch all departments
-        $departments = Departments::all();
+        $query = Departments::query();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            // Filter departments based on the search query
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        // if the query is not found
+        if ($query->count() === 0) {
+            // Flash a message if no departments found
+            Session::flash('message', 'No departments found.');
+        }
+
+
+        // Fetch all departments paginated to 10
+        $departments = $query->latest()->paginate(10);
 
         // Return the view with departments data
         // Using compact to pass the variable to the view
@@ -100,6 +116,27 @@ class DepartmentController extends Controller
         Session::flash('message', 'Department deleted successfully!');
 
         return redirect()->route('admin.departments.index');
+    }
+
+        public function exportPDF ()
+    {
+        // Fetch all programs from the db
+        $deparments = Departments::all();
+
+        // Get current user and date for filename
+        $user = auth()->user()->name ?? 'user';
+        $date = now()->format('Y-m-d_H-i-s');
+
+        // Load the PDF view with the programs data
+        $pdf = Pdf::loadView('admin.departments.pdf.pdf', compact('deparments'));
+
+        // Flash a success message
+        Session::flash('message', 'Departments exported successfully.');
+
+        // Create a descriptive filename
+        $filename = "departments-{$user}-{$date}.pdf";
+
+        return $pdf->download($filename);
     }
 
 }

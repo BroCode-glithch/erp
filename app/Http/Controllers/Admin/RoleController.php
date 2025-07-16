@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -119,5 +120,26 @@ class RoleController extends Controller
 
         // Redirect to roles index with success message
         return redirect()->route('admin.roles.index');
+    }
+
+    public function exportPDF ()
+    {
+        // Fetch all programs from the db
+        $roles = Role::all();
+
+        // Get current user and date for filename
+        $user = auth()->user()->name ?? 'user';
+        $date = now()->format('Y-m-d_H-i-s');
+
+        // Load the PDF view with the programs data
+        $pdf = Pdf::loadView('admin.roles.pdf.pdf', compact('roles'));
+
+        // Flash a success message
+        Session::flash('message', 'Roles exported successfully.');
+
+        // Create a descriptive filename
+        $filename = "roles-{$user}-{$date}.pdf";
+
+        return $pdf->download($filename);
     }
 }

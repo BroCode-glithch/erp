@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Appearance Settings | Admin | ' . config('app.name'))
+@section('title', 'Appearance Settings | Admin | ' . setting('general.site_name'))
 
 @section('content')
 <div class="px-4 py-6 sm:px-6 lg:px-8 max-w-3xl mx-auto">

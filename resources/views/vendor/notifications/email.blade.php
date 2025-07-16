@@ -1,12 +1,17 @@
 <x-mail::message>
+{{-- Optional Logo --}}
+@isset($logo)
+<img src="{{ $logo }}" alt="{{ setting('general.site_name') }} Logo" style="height: 60px; margin: 0 auto 20px; display: block;">
+@endisset
+
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}
 @else
 @if ($level === 'error')
-# @lang('Whoops!')
+# Oops!
 @else
-# @lang('Hello!')
+# Hello!
 @endif
 @endif
 
@@ -25,7 +30,7 @@
     };
 ?>
 <x-mail::button :url="$actionUrl" :color="$color">
-{{ $actionText }}
+    {{ strtoupper($actionText) }}
 </x-mail::button>
 @endisset
 
@@ -39,20 +44,23 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Regards,')<br>
-{{ config('app.name') }}
+Warm regards,  
+**{{ setting('general.site_name') }}**
 @endif
 
 {{-- Subcopy --}}
 @isset($actionText)
 <x-slot:subcopy>
-@lang(
-    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser:',
-    [
-        'actionText' => $actionText,
-    ]
-) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+@if (!empty($actionUrl))
+If you're having trouble clicking the "**{{ $actionText }}**" button, copy and paste the URL below into your web browser:  
+[{{ $displayableActionUrl }}]({{ $actionUrl }})
+@endif
 </x-slot:subcopy>
 @endisset
+
+{{-- Optional Footer --}}
+<hr style="margin-top: 30px;">
+<p style="font-size: 12px; color: #888;">
+    © {{ now()->year }} {{ setting('general.site_name') }}. All rights reserved.
+</p>
 </x-mail::message>

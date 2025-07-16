@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Permission;
@@ -101,4 +102,26 @@ class PermissionController extends Controller
         // Return redirect route to index
         return redirect()->route('admin.permissions.index');
     }
+
+            public function exportPDF ()
+    {
+        // Fetch all programs from the db
+        $permissions = Permission::all();
+
+        // Get current user and date for filename
+        $user = auth()->user()->name ?? 'user';
+        $date = now()->format('Y-m-d_H-i-s');
+
+        // Load the PDF view with the programs data
+        $pdf = Pdf::loadView('admin.permissions.pdf.pdf', compact('permissions'));
+
+        // Flash a success message
+        Session::flash('message', 'Permissions exported successfully.');
+
+        // Create a descriptive filename
+        $filename = "permissions-{$user}-{$date}.pdf";
+
+        return $pdf->download($filename);
+    }
+
 }

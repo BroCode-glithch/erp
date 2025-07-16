@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+// use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -37,7 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -95,11 +96,11 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-    */
+     */
     public function update(Request $request, string $id)
     {
         // Ensure the user is authorized to update this page
-        if (!Auth::user()->can('edit users')) { 
+        if (!Auth::user()->can('edit users')) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -120,6 +121,7 @@ class UserController extends Controller
         ]);
 
 
+        // Update the user details
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -136,8 +138,7 @@ class UserController extends Controller
 
 
             // Redirect back
-            return redirect()->back()
-                ;
+            return redirect()->back();
         }
 
         // Save the user
@@ -182,4 +183,30 @@ class UserController extends Controller
         return redirect()->route('admin.users.index');
     }
 
+
+    public function exportPDF()
+    {
+        // Fetch all programs from the db
+        $users = User::all();
+
+        // Get current user and date for filename
+        $user = auth()->user()->name ?? 'user';
+        $date = now()->format('Y-m-d_H-i-s');
+
+        // Load the PDF view with the users data
+        $pdf = Pdf::loadView('admin.users.pdf.pdf', compact('users'));
+
+        // Ensure the user is authorized to export users
+        if (!Auth::user()->can('export users')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Flash a success message
+        Session::flash('message', value: 'Users exported successfully.');
+
+        // Create a descriptive filename
+        $filename = "users-{$user}-{$date}.pdf";
+
+        return $pdf->download($filename);
+    }
 }

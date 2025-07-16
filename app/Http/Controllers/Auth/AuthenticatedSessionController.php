@@ -12,7 +12,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Notifications\LoginNotification;
-use RealRashid\SweetAlert\Facades\Alert;
 
 
 class AuthenticatedSessionController extends Controller
@@ -33,8 +32,6 @@ class AuthenticatedSessionController extends Controller
     {
         // Authenticate the user
         $request->authenticate();
-        // Regenerate the session to prevent session fixation attacks
-        $request->session()->invalidate();
         // Regenerate the CSRF token
         $request->session()->regenerate();
 

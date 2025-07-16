@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Programs;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
@@ -12,10 +13,25 @@ class ProgramController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch all programs from the db
-        $programs = Programs::all();
+        $query = Programs::query();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            // Filter programs based on the search query
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        // if the query is not found
+        if ($query->count() === 0) {
+            // Flash a message if no programs found
+            Session::flash('message', value: 'No programs found.');
+        }
+
+
+        // Fetch all programs paginated to 10
+        $programs = $query->latest()->paginate(10);
 
         // Return the view with programs data
         // Using compact to pass the variable to the view
@@ -105,5 +121,26 @@ class ProgramController extends Controller
 
         // Redirect to the index route after deletion
         return redirect()->route('admin.programs.index');
+    }
+
+    public function exportPDF ()
+    {
+        // Fetch all programs from the db
+        $programs = Programs::all();
+
+        // Get current user and date for filename
+        $user = auth()->user()->name ?? 'user';
+        $date = now()->format('Y-m-d_H-i-s');
+
+        // Load the PDF view with the programs data
+        $pdf = Pdf::loadView('admin.programs.pdf.pdf', compact('programs'));
+
+        // Flash a success message
+        Session::flash('message', 'Programs exported successfully.');
+
+        // Create a descriptive filename
+        $filename = "programs-{$user}-{$date}.pdf";
+
+        return $pdf->download($filename);
     }
 }

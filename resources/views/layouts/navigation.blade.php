@@ -6,11 +6,10 @@
             <!-- Logo & App Name -->
             <div class="flex items-center space-x-3">
                 <a href="{{ url('/') }}">
-                    {{--  <x-application-logo class="block w-auto text-indigo-600 h-9 dark:text-indigo-400" />  --}}
                     <div class="logo-circle">ERP</div>
                 </a>
                 <a href="{{ url('/') }}">
-                    <span class="text-xl font-bold text-gray-800 dark:text-white">{{ config('app.name') }}</span>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">{{ setting('general.site_name') }}</span>
                 </a>
             </div>
 
@@ -30,13 +29,27 @@
                 @endguest
 
                 @auth
-                    <a href="{{ route('dashboard') }}"
-                       class="text-sm font-medium text-gray-600 transition dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Dashboard
-                    </a>
-                @endauth
+                    @php
 
-                <a href="#features"
+                        $user = Auth::user();
+                        if($user->hasRole('admin')) {
+                            $dashboardRoute = route('admin.dashboard');
+                        } elseif($user->hasRole('care-support')) {
+                            $dashboardRoute = route('care.dashboard');
+                        } elseif($user->hasRole('program-manager')) {
+                            $dashboardRoute = route('pm.dashboard');
+                        } else {
+                            $dashboardRoute = url('/');
+                        }
+
+                    @endphp
+                        <a href="{{ $dashboardRoute }}"
+                        class="block px-3 py-2 text-base font-medium text-gray-700 transition dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
+                            Dashboard
+                        </a>
+                    @endauth
+
+                <a href="{{route('features')}}"
                    class="text-sm font-medium text-gray-600 transition dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
                     Features
                 </a>
@@ -71,7 +84,7 @@
     <div x-show="open"
          class="px-4 pb-4 transition-all duration-300 ease-in-out origin-top bg-white border-t border-gray-200 sm:hidden dark:bg-gray-900 dark:border-gray-700">
         <div class="pt-2 space-y-2">
-            <a href="#features"
+            <a href="{{route('features')}}"
                class="block px-3 py-2 text-base font-medium text-gray-700 transition dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
                 Features
             </a>

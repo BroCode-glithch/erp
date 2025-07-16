@@ -25,13 +25,17 @@ class SettingsController extends Controller
         // Fetch general settings with default values
         $settings = [
             'site_name' => setting('general.site_name', config('app.name')),
-            'admin_email' => setting('general.admin_email', config('mail.from.address')),
+            'system_email' => setting('general.system_email', config('mail.from.address')),
             'contact_phone' => setting('general.contact_phone'),
+            'contact_address' => setting('general.contact_address', '123 ERP Street, Lagos, Nigeria'),
             'timezone' => setting('general.timezone', config('app.timezone')),
             'date_format' => setting('general.date_format', 'Y-m-d'),
-            'currency_symbol' => setting('general.currency_symbol', '$'),
+            'time_format' => setting('general.time_format', 'H:i:s'),
+            'currency' => setting('general.currency', 'NGN'),
+            'currency_symbol' => setting('general.currency_symbol', '₦'),
             'maintenance_mode' => setting('general.maintenance_mode', false),
             'site_logo' => setting('general.site_logo', null),
+            'favicon' => setting('general.favicon', null),
         ];
 
         // Check if site logo exists and get its URL
@@ -50,13 +54,16 @@ class SettingsController extends Controller
         // Validate the request data
         $request->validate([
             'site_name' => 'required|string|max:255',
-            'admin_email' => 'required|email|max:255',
+            'system_email' => 'required|email|max:255',
             'contact_phone' => 'nullable|string|max:20',
+            'contact_address' => 'nullable|string|max:255',
+            'site_logo' => 'nullable|string|max:255',
+            'favicon' => 'nullable|string|max:255',
+            'time_format' => 'required|string|max:20',
             'timezone' => 'required|timezone',
             'date_format' => 'required|string|max:20',
             'currency_symbol' => 'required|string|max:10',
             'maintenance_mode' => 'nullable|boolean',
-            'site_logo' => 'nullable|image|max:2048', // max 2MB
         ]);
 
         // Handle logo upload
@@ -65,13 +72,23 @@ class SettingsController extends Controller
             setting(['general.site_logo' => $path]);
         }
 
+        // Handle favicon upload
+        if ($request->hasFile('favicon')) {
+            $path = $request->file('favicon')->store('settings', 'public');
+            setting(['general.favicon' => $path]);
+        }
+
         // Update general settings
         setting([
             'general.site_name' => $request->site_name,
-            'general.admin_email' => $request->admin_email,
-            'general.contact_phone' => $request->contact_phone,
+            'general.system_email' => $request->system_email,
+            'general.contact_address' => $request->contact_address,
+            'general.site_logo' => $request->site_logo,
+            'general.favicon' => $request->favicon,
+            'general.time_format' => $request->time_format,
             'general.timezone' => $request->timezone,
             'general.date_format' => $request->date_format,
+            'general.contact_phone' => $request->contact_phone,
             'general.currency_symbol' => $request->currency_symbol,
             'general.maintenance_mode' => $request->boolean('maintenance_mode'),
         ]);
@@ -119,7 +136,7 @@ class SettingsController extends Controller
             ;
     }
 
-    
+
     public function toggle2FA(User $user)
     {
         // Check if the user is authorized to update 2FA settings
