@@ -11,7 +11,7 @@
         <meta name="author" content="Lerion Jake Nwauda Digital Innovations">
 
         {{-- Open Graph Meta Tags --}}
-        <meta property="og:title" content="{{ config('app.name', 'ERP SYSTEM') }}">
+        <meta property="og:title" content="{{ setting('general.site_name', 'ERP SYSTEM') }}">
         <meta property="og:description" content="All-in-one ERP solution for efficient and secure organizational management.">
         <meta property="og:type" content="website">
         <meta property="og:url" content="{{ url()->current() }}">
@@ -19,7 +19,7 @@
 
         <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
         
-        <title>{{ config('app.name', 'ERP SYSTEM') }}</title>
+        <title>{{ setting('general.site_name', 'ERP SYSTEM') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -27,6 +27,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @PwaHead
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-800">
@@ -46,5 +47,8 @@
                 {{ $slot }}
             </main>
         </div>
+
+        @RegisterServiceWorkerScript
+
     </body>
 </html>

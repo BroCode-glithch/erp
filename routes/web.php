@@ -100,7 +100,9 @@ Route::middleware(['auth', '2fa', 'role:admin'])->prefix('admin')->name('admin.'
     Route::put('/settings/appearance', [SettingsController::class, 'updateAppearance'])->name('settings.appearance.update');
 
     // Reports
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::resource('/reports', ReportController::class);
+    Route::get('/reports/export/pdf', [ReportController::class, 'exportPDF'])->name('reports.export.pdf');
+
 });
 
 Route::middleware(['auth', '2fa', 'role:program-manager'])->prefix('pm')->name('pm.')->group(function () {

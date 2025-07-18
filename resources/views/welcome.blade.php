@@ -21,11 +21,21 @@
     <meta property="og:url" content="{{ url('/') }}">
     <meta property="og:image" content="{{ asset('images/erp-og-image.png') }}">
 
+    <!-- PWA: Manifest, Theme, etc. -->
+    {{--  <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#ffffff"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="{{ asset('images/icons/logo-192.png') }}">  --}}
+
+
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
     <title>Welcome | {{ setting('general.site_name') }}</title>
     @vite('resources/css/app.css')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        @PwaHead
+    
 </head>
 
 <body x-data="{ darkMode: false }" :class="{ 'dark': darkMode }"
@@ -174,25 +184,13 @@
                 Contact Us
             </a>
         </section>
-
-
+        
         <!-- Footer -->
-        <footer class="w-full mt-24 border-t bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
-            <div
-                class="flex flex-col items-center justify-between px-4 py-8 text-sm text-gray-500 sm:flex-row dark:text-gray-400">
-                <div>
-                    &copy; {{ date('Y') }} <a href="http://lerionjakenwauda.com/" target="_blank"
-                        class="font-medium hover:underline">Lerion Jake Nwauda Digital Innovations</a>.
-                </div>
-                <div class="flex gap-4 mt-2 sm:mt-0">
-                    <a href="{{ route('policy') }}" class="hover:underline">Privacy Policy</a>
-                    <a href="{{ route('terms') }}" class="hover:underline">Terms</a>
-                    <a href="mailto:{{ setting('general.system_email') }}" class="hover:underline">Contact</a>
-                </div>
-            </div>
-        </footer>
+        @include('partials.footer')
 
     </div>
+        @RegisterServiceWorkerScript
+        @stack('scripts')
 </body>
 
 </html>

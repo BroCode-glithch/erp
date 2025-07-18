@@ -7,22 +7,21 @@
     System Logo
 */
 
-/* Circular Logo */
 .logo-circle {
-    font-family: 'Arial', sans-serif;
-    font-size: 36px;
-    font-weight: bold;
-    color: #fff; /* Text color */
-    background-color: #667eea; /* Background color for the circle */
-    width: 60px; /* Set the width of the circle */
-    height: 60px; /* Set the height of the circle */
-    border-radius: 50%; /* Makes the container a circle */
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #6366f1;
     display: flex;
-    align-items: center; /* Center the text vertically */
-    justify-content: center; /* Center the text horizontally */
-    text-transform: uppercase; /* Optional: makes the text uppercase */
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2); /* Optional: shadow for depth */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
+.logo-circle img {
+    width: 100%;
+    height: auto;
+}
+
 
 .sidebar-link {
     @apply flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition;
@@ -94,8 +93,6 @@
 }
 
 
-
-
 /*
 
     Login Page Animation
@@ -118,12 +115,12 @@
     }
 }
 
-    /* Apply the animation to the login form */
+    /* Applied the animation to the login form */
 .fade-in-pop-up {
     animation: fadeInPopUp 1s ease-out; /* Duration and easing function */
 }
 
-    /* Optional: A background overlay effect when the form appears */
+
 .overlay {
     background-color: rgba(0, 0, 0, 0.5); /* Dark transparent overlay */
     position: absolute;
@@ -132,8 +129,6 @@
     right: 0;
     bottom: 0;
 }
-
-
 
 video {
     object-fit: cover;

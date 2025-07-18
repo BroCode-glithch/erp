@@ -15,23 +15,35 @@
 
 # 🗂️ Laravel ERP System
 
-A **modular, role-based ERP dashboard** built with Laravel, designed for scalable management of users, programs, and departments. This project demonstrates best practices in Laravel architecture, UI/UX, and security, and is suitable for onboarding, NGO, or enterprise use.
+A **modular, role-based ERP dashboard** built with Laravel, designed for scalable management of users, programs, and departments. This project demonstrates a simple best practices in Laravel architecture, UI/UX, and security, and is suitable for onboarding, NGO, or enterprise use.
 
 ---
 
 ## 🚀 Features
 
-### 🎯 Role-Based Authentication & Dashboards
+### 🎯 Role-Based Authentication & Dashboards using Spatie
 
-- Secure login/register with role-based dashboard redirection:
+  - Secure login/register with role-based dashboard redirection:
   - **Admin**
   - **Program Manager**
   - **Care Support**
-- Middleware-protected roles['admin', 'pm', 'support'] routes
+  - Secure User Authentication with Email Verification
+  - Location-aware Login Notifications
+  - Middleware-protected roles['admin', 'pm', 'support'] routes
+  - Little Responsive UI powered by Tailwind CSS
 
-### 🖥️ Admin Dashboard
+### 🖥️ Admin Dashboard with Analytics and CRUD Operations:
 
 - **Departments, Programs, Users** management
+- Search, create, edit, and delete for each module
+- Export data (PDF, Excel, XML) for each module
+- Responsive, accessible, and consistent UI (light/dark mode)
+- Notifications, activity logs, and audit trails (planned)
+- Modular Blade components for easy customization
+
+### 🖥️ Program Manger Dashboard
+
+- **Programs** management
 - Search, create, edit, and delete for each module
 - Export data (PDF, Excel, XML) for each module
 - Responsive, accessible, and consistent UI (light/dark mode)
@@ -140,7 +152,9 @@ A **modular, role-based ERP dashboard** built with Laravel, designed for scalabl
 - **Tailwind CSS** (UI styling)
 - **PHP 8.2.26**
 - **MySQL**
-- **barryvdh/laravel-dompdf** (PDF export)
+- **"barryvdh/laravel-dompdf": "^3.1",** (PDF export)
+- **"erag/laravel-pwa": "^1.8",** (Progressive Web App Install)
+- **"robthree/twofactorauth": "^3.0"** (2fa auth)
 - ***...**
 
 ---
@@ -176,6 +190,12 @@ Edit `.env` and set your database credentials.
 php artisan migrate
 ```
 
+### 4. Seed the db with record
+
+```bash
+php artisan db:seed
+```
+
 ### 4. Start Local Server
 
 ```bash
@@ -209,7 +229,16 @@ php artisan serve
 - [X] Notification system
 - [ ] User activity logs
 - [ ] Unit & feature tests
+- [X] Responsiveness of portals on Mobile
 - [ ] ...
+
+---
+
+## 😒 Challenges
+
+- UI/UX Design of the admin, and program-manager dashboard
+- System Name
+- **Admin Dashboard Mobile Responsiveness** (Key Challenge)
 
 ---
 

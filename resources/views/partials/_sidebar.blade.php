@@ -7,9 +7,11 @@
     <!-- Logo & App Name -->
     <div class="flex items-center px-4 py-4 space-x-3">
         <a href="{{ url('/') }}">
-            {{--  <x-application-logo class="block w-auto text-indigo-600 h-9 dark:text-indigo-400" />  --}}
-            <div class="logo-circle">ERP</div>
+            <div class="logo-circle">
+                <img src="{{ asset('logo.png') }}" alt="ERP Logo" style="width: 48px; height: 48px;">
+            </div>
         </a>
+        
         <a href="{{ url('/') }}">
             <span class="text-xl font-bold text-gray-800 dark:text-white">{{ setting('general.site_name') }}</span>
         </a>

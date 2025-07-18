@@ -1,0 +1,16 @@
+{
+    "name": "ERP System",
+    "short_name": "ERP",
+    "background_color": "#6366f1",
+    "display": "standalone",
+    "description": "Modern ERP PWA for your business operations.",
+    "theme_color": "#6366f1",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

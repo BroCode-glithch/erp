@@ -3,7 +3,7 @@
 
         <!-- Left -->
         <div class="text-sm">
-            © {{ now()->year }} <a href="{{ config('app.url') }}"><span class="font-semibold">{{ config('app.name', 'ERP System') }}</span></a>. All rights reserved.
+            &copy; {{ now()->year }} <a href="{{ config('app.url') }}"><span class="font-semibold">{{ setting('general.site_name') ?? 'ERP System' }}</span></a>. Developed with <a target="_blank" href="https://github.com/BroCode-glithch">❤️</a>. All rights reserved.
         </div>
 
         <!-- Center (Optional links) -->

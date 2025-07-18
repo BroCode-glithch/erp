@@ -39,6 +39,9 @@
             display: none !important;
         }
     </style>
+
+    @pwaHead
+    
 </head>
 
 <body x-data="{
@@ -98,6 +101,87 @@
         </div>
     </div>
 
+    <!-- inactivity Modal -->
+    <div id="inactivityModal" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7);">
+        <div style="background: white; color: black; padding: 2rem; max-width: 400px; margin: 20% auto; text-align: center; border-radius: 8px;">
+            <h1 style="color: red">Inactive</h1>
+            <p>You have been inactive for a while. You will be logged out in <span id="countdown">120</span> seconds.</p>
+            <button id="stayLoggedIn" style="padding: 0.5rem 1rem; background: #3490dc; color: white; border: none; border-radius: 4px;">Stay Logged In</button>
+        </div>
+    </div>
+
+    <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display: none;">
+        @csrf
+    </form>
+
+    // This was taken from a previous project of mine
+    <script>
+        let inactivityTime = function () {
+            let warningTimer;
+            let logoutTimer;
+            let modalIsVisible = false; // NEW FLAG
+
+            const warningTime = 15 * 60* 1000;// 15 minutes
+            const logoutTime = 2 * 60 * 1000;   // 2 minutes
+
+            function resetTimer() {
+                // If the modal is showing, don't reset just from mouse/key movement
+                if (modalIsVisible) {
+                    return;
+                }
+
+                clearTimeout(warningTimer);
+                clearTimeout(logoutTimer);
+
+                // Hide modal if it's open (precaution)
+                document.getElementById('inactivityModal').style.display = 'none';
+
+                warningTimer = setTimeout(showWarning, warningTime);
+            }
+
+            function showWarning() {
+                const modal = document.getElementById('inactivityModal');
+                const countdownEl = document.getElementById('countdown');
+                let timeLeft = 120; // 2 minutes in seconds
+
+                modal.style.display = 'block';
+                modalIsVisible = true; // mark modal as visible
+                countdownEl.textContent = timeLeft;
+
+                // Start countdown
+                const countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    countdownEl.textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
+
+                // Start logout timer
+                logoutTimer = setTimeout(() => {
+                    // ✅ Option to submit a logout form here instead of GET
+                    document.getElementById('logoutForm').submit();
+                }, logoutTime);
+            }
+
+            // List of events to consider as activity
+            window.onload = resetTimer;
+            document.onmousemove = resetTimer;
+            document.onkeydown = resetTimer;
+            document.onclick = resetTimer;
+            document.onscroll = resetTimer;
+
+            // Stay logged in button
+            document.getElementById('stayLoggedIn').addEventListener('click', () => {
+                modalIsVisible = false; // reset the modal flag
+                resetTimer();
+            });
+        };
+
+        inactivityTime();
+
+    </script>
+
     {{-- Preloader Script --}}
     <script>
         window.addEventListener('load', () => {
@@ -117,6 +201,9 @@
             }));
         }
     </script>
+
+
+    @RegisterServiceWorkerScript
 
     @stack('scripts')
 

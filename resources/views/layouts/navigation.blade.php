@@ -6,8 +6,11 @@
             <!-- Logo & App Name -->
             <div class="flex items-center space-x-3">
                 <a href="{{ url('/') }}">
-                    <div class="logo-circle">ERP</div>
+                    <div class="logo-circle">
+                        <img src="{{ asset('logo.png') }}" alt="ERP Logo" style="width: 48px; height: 48px;">
+                    </div>
                 </a>
+                
                 <a href="{{ url('/') }}">
                     <span class="text-xl font-bold text-gray-800 dark:text-white">{{ setting('general.site_name') }}</span>
                 </a>
@@ -56,8 +59,8 @@
 
                 <!-- Theme Toggle -->
                 <button @click="darkMode = !darkMode" class="p-2">
-                    <x-heroicon-o-sun id="theme-toggle-light" class="hidden size-5 text-yellow-500" />
-                    <x-heroicon-o-moon id="theme-toggle-dark" class="size-5 text-gray-900 dark:text-gray-800" />
+                    <x-heroicon-o-sun id="theme-toggle-light" class="hidden text-yellow-500 size-5" />
+                    <x-heroicon-o-moon id="theme-toggle-dark" class="text-gray-900 size-5 dark:text-gray-800" />
                 </button>
             </div>
 
@@ -104,8 +107,8 @@
 
             <!-- Theme Toggle -->
             <button @click="darkMode = !darkMode" class="p-2">
-                <x-heroicon-o-sun id="theme-toggle-light" class="hidden size-5 text-yellow-500" />
-                <x-heroicon-o-moon id="theme-toggle-dark" class="size-5 text-gray-900 dark:text-gray-800" />
+                <x-heroicon-o-sun id="theme-toggle-light" class="hidden text-yellow-500 size-5" />
+                <x-heroicon-o-moon id="theme-toggle-dark" class="text-gray-900 size-5 dark:text-gray-800" />
             </button>
 
             @auth

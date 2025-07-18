@@ -7,4 +7,5 @@ return [
     App\Providers\JetstreamServiceProvider::class,
     App\Providers\QrCodeServiceProvider::class,
     App\Providers\SettingsServiceProvider::class,
+    Ladumor\LaravelPwa\PWAServiceProvider::class,
 ];

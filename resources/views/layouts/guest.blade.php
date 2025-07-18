@@ -26,10 +26,12 @@
 
     @vite('resources/css/app.css')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    @PwaHead
 </head>
 
 <body x-data="{ darkMode: localStorage.getItem('theme') === 'dark' }" x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))" :class="{ 'dark': darkMode }"
-    class="antialiased text-gray-800 bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen flex flex-col">
+    class="flex flex-col min-h-screen antialiased text-gray-800 bg-gray-100 dark:bg-gray-900 dark:text-white">
 
     {{-- Flash Message --}}
     @if (session()->has('message'))
@@ -43,7 +45,7 @@
 
     @include('layouts.navigation')
 
-    <main class="flex flex-1 flex-col items-center justify-center pt-12 pb-12 sm:pt-16 sm:pb-16">
+    <main class="flex flex-col items-center justify-center flex-1 pt-12 pb-12 sm:pt-16 sm:pb-16">
         <div
             class="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:max-w-md sm:rounded-lg">
             {{ $slot }}
@@ -51,22 +53,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full border-t bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
-        <div
-            class="flex flex-col items-center justify-between px-4 py-8 text-sm text-gray-500 dark:text-gray-400 sm:flex-row">
-            <div>
-                &copy; {{ date('Y') }} <a href="http://lerionjakenwauda.com/" target="_blank"
-                    class="font-medium hover:underline">Lerion Jake Nwauda Digital Innovations</a>.
-            </div>
-            <div class="flex gap-4 mt-2 sm:mt-0">
-                <a href="{{ route('policy') }}" class="hover:underline">Privacy Policy</a>
-                <a href="{{ route('terms') }}" class="hover:underline">Terms</a>
-                <a href="mailto:emmaariyom1@gmail.com" class="hover:underline">Contact</a>
-            </div>
-        </div>
-    </footer>
+    @include('partials.footer')
 
     <!-- Scripts -->
+    @RegisterServiceWorkerScript
     @vite('resources/js/app.js')
 </body>
 

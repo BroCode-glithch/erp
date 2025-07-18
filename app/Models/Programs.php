@@ -15,4 +15,10 @@ class Programs extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Departments::class, 'department_id');
+    }
+
 }

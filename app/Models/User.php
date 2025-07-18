@@ -76,4 +76,10 @@ class User extends Authenticatable
         // You can adjust this logic based on your actual setup
         return !is_null($this->two_factor_secret) && $this->two_factor_verified_at != null;
     }
+
+    public function program()
+    {
+        return $this->belongsTo(Programs::class, 'program_id');
+    }
+
 }
