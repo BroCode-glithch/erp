@@ -269,7 +269,21 @@ Laravel is a web application framework with expressive, elegant syntax. Learn mo
 
 ## 📸 Screenshots
 
-> Coming soon: UI screenshots of dashboard, modules, and exports.
+### Welcome Page
+![Welcome Page](screenshots/welcome.png)
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Register Page
+![Register Page](screenshots/register.png)
+
+### Admin Dashboard Light
+![Admin Light DAshboard](screenshots/admin_dashboard_light.png)
+![Admin Light DAshboard](screenshots/admin_dashboard_light_2.png)
+
+### Admin Dashboard DArk
+![Admin Dark DAsboard](screenshots/admin_dashboard_dark.png)
 
 ---
 
