@@ -19,8 +19,15 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('images/erp-og-image.png') }}">
-    
+
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+
+    <!-- Intro.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css" />
+
+    <!-- Intro.js JS -->
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+
 
     <title>
         @yield('title', 'Admin Panel | ' . setting('general.site_name'))

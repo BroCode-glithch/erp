@@ -1,12 +1,14 @@
+@import "../../node_modules/intro.js/introjs.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @custom-variant dark (&:where(.dark, .dark *)); */
 
-/*
-    System Logo
+/* 
+|--------------------------------------------------------------------------
+| System Logo
+|--------------------------------------------------------------------------
 */
-
 .logo-circle {
     width: 48px;
     height: 48px;
@@ -17,18 +19,28 @@
     justify-content: center;
     overflow: hidden;
 }
+
 .logo-circle img {
     width: 100%;
     height: auto;
 }
 
 
+/* 
+|--------------------------------------------------------------------------
+| Sidebar Link
+|--------------------------------------------------------------------------
+*/
 .sidebar-link {
     @apply flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition;
 }
 
 
-
+/* 
+|--------------------------------------------------------------------------
+| Feature Card Animation
+|--------------------------------------------------------------------------
+*/
 @keyframes waveBounce {
     0%, 100% {
         transform: translateY(0);
@@ -43,7 +55,11 @@
 }
 
 
-/* Preloader Styles */
+/* 
+|--------------------------------------------------------------------------
+| Preloader Styles
+|--------------------------------------------------------------------------
+*/
 #preloader {
     position: fixed;
     top: 0;
@@ -93,12 +109,11 @@
 }
 
 
-/*
-
-    Login Page Animation
-
+/* 
+|--------------------------------------------------------------------------
+| Login Page Animation
+|--------------------------------------------------------------------------
 */
-
 /* Keyframes for Fade In and Pop-up */
 @keyframes fadeInPopUp {
     0% {
@@ -107,20 +122,25 @@
     }
     60% {
         opacity: 1;
-        transform: scale(1.1); /* Slightly bigger for the pop-up effect */
+        transform: scale(1.1);
     }
     100% {
         opacity: 1;
-        transform: scale(1); /* Return to normal size */
+        transform: scale(1);
     }
 }
 
-    /* Applied the animation to the login form */
+/* Applied the animation to the login form */
 .fade-in-pop-up {
     animation: fadeInPopUp 1s ease-out; /* Duration and easing function */
 }
 
 
+/* 
+|--------------------------------------------------------------------------
+| Video Overlay Styling
+|--------------------------------------------------------------------------
+*/
 .overlay {
     background-color: rgba(0, 0, 0, 0.5); /* Dark transparent overlay */
     position: absolute;

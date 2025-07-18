@@ -3,8 +3,16 @@
 
         <!-- Left -->
         <div class="text-sm">
-            &copy; {{ now()->year }} <a href="{{ config('app.url') }}"><span class="font-semibold">{{ setting('general.site_name') ?? 'ERP System' }}</span></a>. Developed with <a target="_blank" href="https://github.com/BroCode-glithch">❤️</a>. All rights reserved.
+            &copy; {{ now()->year }}
+            <a href="{{ config('app.url') }}">
+                <span class="font-semibold">{{ setting('general.site_name') ?? 'ERP System' }}</span>
+            </a>
+            <span class="ml-2 px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-md dark:bg-blue-800 dark:text-blue-100">
+                v1.0
+            </span>
+            . Developed with <a target="_blank" href="https://github.com/BroCode-glithch">❤️</a>. All rights reserved.
         </div>
+
 
         <!-- Center (Optional links) -->
         <div class="flex space-x-4 text-sm">

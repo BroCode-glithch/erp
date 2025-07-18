@@ -23,8 +23,16 @@
                 </a>
             </div>
 
+
             <!-- Right: User Menu -->
             <div class="flex items-center space-x-4">
+                
+                {{-- Tour Button --}}
+                {{--  <button onclick="startAdminTour()" class="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    🎯 Take a Quick Tour
+                </button>  --}}
+
+
                 <!-- Notification -->
                 <button class="relative text-gray-500 focus:outline-none dark:text-gray-300 hover:text-gray-600 dark:hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
@@ -37,26 +45,40 @@
 
                 <!-- User Dropdown -->
                 <div class="relative" x-data="{ open: false }">
+                    <!-- Toggle Button -->
                     <button @click="open = !open" class="flex items-center space-x-2 text-sm focus:outline-none">
                         <img class="object-cover w-8 h-8 rounded-full"
-                             src="{{ Auth::user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name) }}"
-                             alt="User Photo">
-                        <span class="hidden font-medium text-gray-700 sm:block dark:text-gray-200">{{ Auth::user()->name }}</span>
+                            src="{{ Auth::user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name) }}"
+                            alt="User Photo">
+                        <span class="hidden font-medium text-gray-700 sm:block dark:text-gray-200">
+                            {{ Auth::user()->name }}
+                        </span>
                     </button>
 
+                    <!-- Dropdown -->
                     <div x-show="open" @click.away="open = false" x-transition
-                         class="absolute right-0 z-50 w-48 py-1 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+                        class="absolute right-0 z-50 w-48 py-1 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+
+                        <!-- Go to Site -->
+                        <a href="{{ config('app.url') }}" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            Go to Site
+                        </a>
+
+                        <!-- Profile -->
                         <a href="{{ route('admin.profile.edit') }}" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                             {{ __('Profile') }}
                         </a>
+
+                        <!-- Logout -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                {{ __('Logout') }}
+                            {{ __('Logout') }}
                             </button>
                         </form>
                     </div>
                 </div>
+
             </div>
 
         </div>

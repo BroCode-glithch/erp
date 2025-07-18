@@ -19,6 +19,7 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
-        "chart.js": "^4.4.8"
+        "chart.js": "^4.4.8",
+        "intro.js": "^8.3.2"
     }
 }

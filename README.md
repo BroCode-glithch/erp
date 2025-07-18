@@ -285,6 +285,12 @@ Laravel is a web application framework with expressive, elegant syntax. Learn mo
 ### Admin Dashboard DArk
 ![Admin Dark DAsboard](screenshots/admin_dashboard_dark.png)
 
+### Admin Inactive Modal After 15mins DArk
+![Admin Dashboard Logout Modal](screenshots/admin_inactive_modal.png)
+
+### Project Video Demo
+![Admin Dashboard Logout Modal](demo-video/demo.mp4)
+
 ---
 
 ## 🏆 Assessment Criteria (Self-Evaluation)

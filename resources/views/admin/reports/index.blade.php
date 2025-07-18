@@ -65,6 +65,14 @@
                         + New Report
                     </a>
                 </div>
+
+                <div class="flex items-center gap-2 px-4 py-3 mt-4 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600">
+                    <svg class="w-5 h-5 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 12a9 9 0 110-18 9 9 0 010 18z"/>
+                    </svg>
+                    <span>Chart-based reports are coming soon. Stay tuned!</span>
+                </div>
             </div>
         </div>
 
@@ -80,18 +88,37 @@
                     <tr>
                         <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">#</th>
                         <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Title</th>
-                        
+                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Description</th>
+                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Type</th>
+                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Filters</th>
+                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">File</th>
+                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">Created</th>
                         <th class="px-6 py-3 text-xs font-medium text-right text-gray-500 uppercase dark:text-gray-300">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                    @forelse($reports as $index => $report)
+                    @forelse($reports as $report)
                         <tr>
-                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $index + 1 }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $report->title }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $report->description }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ ucfirst($report->type) }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
+                                {{ $report->filters ?? '-' }}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
+                                @if ($report->file_path)
+                                    <a href="{{ Storage::url($report->file_path) }}" target="_blank" class="text-blue-600 hover:underline">View</a>
+                                @else
+                                    <span class="text-gray-400">No file</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
+                                {{ $report->created_at->format('Y-m-d') }}
+                            </td>
                             <td class="px-6 py-4 space-x-2 text-sm text-right">
                                 <a href="{{ route('admin.reports.edit', $report->id) }}"
-                                   class="px-3 py-1 text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">Edit</a>
+                                class="px-3 py-1 text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900">Edit</a>
                                 <button
                                     @click="showModal = true; deleteUrl = '{{ route('admin.reports.destroy', $report->id) }}'"
                                     class="px-3 py-1 text-red-500 border border-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-900">
@@ -99,17 +126,10 @@
                                 </button>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
-                                No reports found.
-                            </td>
-                        </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 @endsection
