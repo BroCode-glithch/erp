@@ -289,15 +289,15 @@ Laravel is a web application framework with expressive, elegant syntax. Learn mo
 
 ## 🏆 Assessment Criteria (Self-Evaluation)
 
-| Category        | Points (Max)   | Your Progress |
+| Category        | Points (Max)   | My Progress (Status) |
 | --------------- | -------------- | ------------- |
-| Architecture    | 200            | *See below* |
-| Code Quality    | 150            | *See below* |
-| Features        | 200            | *See below* |
-| UI/UX           | 150            | *See below* |
-| Security        | 100            | *See below* |
-| Deployment      | 100            | *See below* |
-| Docs & Git      | 100            | *See below* |
+| Architecture    | 200            | *Pending* |
+| Code Quality    | 150            | *Pending* |
+| Features        | 200            | *Pending* |
+| UI/UX           | 150            | *Pending* |
+| Security        | 100            | *Pending* |
+| Deployment      | 100            | *Pending* |
+| Docs & Git      | 100            | *Pending* |
 | **Total** | **1000** |               |
 
 ---
@@ -314,6 +314,6 @@ Laravel is a web application framework with expressive, elegant syntax. Learn mo
 
 ---
 
-> For a detailed scoring breakdown, please refer to the assessment rubric or contact the reviewer.
+> For a detailed scoring breakdown, please refer to the assessment rubric or contact the reviewer @    <a href="mailto://stephen.okwelume@lerionjakenwauda.com"></a>.
 
 ---
